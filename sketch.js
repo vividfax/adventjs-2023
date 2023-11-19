@@ -1,7 +1,7 @@
 let today = 0;
 
 let days = [];
-let totalDays = 3;
+let totalDays = 1;
 
 let assets = {};
 
@@ -9,13 +9,19 @@ let homepage;
 let body, controlsText, creditsText;
 let canvas;
 let noLoopCanvas;
+// let debugCanvas;
+
+let fonts = {};
 
 function preload() {
 
-    for (let i = 0; i < totalDays; i++) {
-        let n = i == 0 ? "X" : i;
+    for (let i = 0; i < 25; i++) {
+        let n = i+1;
         eval("day"+ n +"Preload()");
     }
+
+    fonts.redressed = loadFont("./assets/homepage/Redressed-Regular.ttf");
+    fonts.satisfy = loadFont("./assets/homepage/Satisfy-Regular.ttf");
 }
 
 function setup() {
@@ -23,6 +29,13 @@ function setup() {
     canvas = createCanvas(700, 700);
     canvas.parent("canvas-wrapper");
     noLoopCanvas = createGraphics(width, height);
+    // debugCanvas = createGraphics(width, height);
+
+    resetModes();
+
+    // allSprites.autoDraw = false;
+    // allSprites.autoUpdate = false;
+    // world.autoStep = false;
 
     body = select("body");
     controlsText = select("#controls");
@@ -50,6 +63,8 @@ function draw() {
             push();
             days[today].update();
             pop();
+            autoPlayP5Play();
+            resetModes();
         } else if (homepage.enteringDoor || homepage.exitingDoor) {
             image(noLoopCanvas, 0, 0, width, height);
         }
@@ -61,12 +76,15 @@ function draw() {
     }
 
     updatePageBackground();
+    resetModes();
+    // image(debugCanvas, 0, 0);
+    // debugCanvas.clear();
 }
 
 function createDays() {
 
-    for (let i = 0; i < totalDays; i++) {
-        let n = i == 0 ? "X" : i;
+    for (let i = 0; i < 25; i++) {
+        let n = i+1;
         eval("days.push(new Day"+ n +"())");
     }
 }
@@ -77,11 +95,14 @@ function changeDay(date) {
 
     today = date;
 
+    resetP5Play();
+
     clear();
 
     push();
     days[today].prerun();
     pop();
+    resetModes();
 
     if (!days[today].loop) {
         push();
@@ -89,6 +110,36 @@ function changeDay(date) {
         pop();
         noLoopCanvas.image(canvas, 0, 0, width, height);
     }
+}
+
+function resetModes() {
+
+    colorMode(RGB, 255);
+    ellipseMode(CENTER);
+    rectMode(CORNER);
+    blendMode(BLEND);
+    imageMode(CORNER);
+    angleMode(RADIANS);
+    textureMode(IMAGE);
+}
+
+function autoPlayP5Play() {
+
+    // if (days[today].autoPlayP5Play) {
+    //     camera.on();
+    //     allSprites.draw();
+    //     world.step()
+    //     allSprites.update();
+    //     camera.off();
+    // }
+}
+
+function resetP5Play() {
+
+    // allSprites.removeAll();
+    // world.gravity.x = 0;
+    // world.gravity.y = 0;
+    // world.allowSleeping = true;
 }
 
 function setupGrammar(grammarSource) {
@@ -153,6 +204,10 @@ function mouseReleased() {
 function keyPressed() {
 
     if (!homepage.visible || (homepage.visible && homepage.doorOpen)) days[today].keyPressed();
+    else {
+        if (keyCode == 187) changeDay(totalDays++);
+        else if (keyCode == 189) changeDay(totalDays--);
+    }
 }
 
 function keyReleased() {

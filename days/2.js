@@ -77,7 +77,6 @@ class Day2 extends Day {
         background(this.colours.snow);
         this.displayTrail();
         this.displayPlayer();
-
     }
 
     displayTrail() {

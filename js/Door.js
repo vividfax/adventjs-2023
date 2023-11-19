@@ -1,26 +1,34 @@
 class Door {
 
-    constructor(x, y, num, date) {
+    constructor(x, y, num, date, values) {
 
         this.x = x;
         this.y = y;
         this.num = num;
         this.date = date;
 
-        this.doorSize = 100;
-        this.doorSpacing = 140;
+        this.values = values;
+        this.palette = values.palette;
 
-        this.xPos = x * this.doorSpacing + this.doorSpacing/2;
-        this.yPos = y * this.doorSpacing + this.doorSpacing/2;
+        this.numberOffset = int(random(4));
+        this.flashOffset = random(360);
+
+        this.xPos = (x-2) * this.values.doorSpacingX;
+        this.yPos = (y-2) * this.values.doorSpacingY - 15;
+        if (y == 4) this.yPos += 19;
+        if (y == 4 && x == 2) this.yPos += 14+8.5;
 
         this.hovering = false;
         this.clicked = false;
-        this.openAmount = 0;
+        this.opened = false;
 
-        this.ready = this.date < days.length;
+        this.ready = this.date <= totalDays;
+        // this.ready = true; // delete this later
     }
 
     update() {
+
+        this.ready = this.date <= totalDays; // debug
 
         if (!this.ready) return;
 
@@ -29,12 +37,33 @@ class Door {
 
     checkHover() {
 
-        let w = this.doorSize/2;
-
         this.hovering = false;
 
-        if ((mouseX > this.xPos-w && mouseX < this.xPos+w) && (mouseY > this.yPos-w && mouseY < this.yPos+w)) {
-            this.hovering = true;
+        let xPos = this.xPos;
+        let yPos = this.yPos;
+        let w = this.values.doorSize/2;
+        let h = this.values.doorSize/2;
+        if (this.y == 4 && this.x == 2) {
+            yPos -= 8;
+            w += 5;
+            h += 12;
+        }
+
+        // debugCanvas.push();
+        // debugCanvas.translate(width/2, height/2);
+        // debugCanvas.rectMode(CORNERS);
+        // debugCanvas.fill(0, 20);
+        // debugCanvas.rect(xPos-w, yPos-h, xPos+w, yPos+h);
+        // debugCanvas.ellipse(xPos, yPos-h, w*2);
+        // debugCanvas.pop();
+
+        if ((mouseX-width/2 > xPos-w && mouseX-width/2 < xPos+w) && (mouseY-height/2 > yPos-h && mouseY-height/2 < yPos+h)) this.hovering = true;
+
+        if (this.y == 4) {
+
+            let distance = dist(mouseX-width/2, mouseY-height/2, xPos, yPos-h);
+
+            if (distance < w) this.hovering = true;
         }
     }
 
@@ -44,9 +73,11 @@ class Door {
 
         if (!this.clicked) {
 
+            this.hovering = false;
             this.clicked = true;
             homepage.enteringDoor = true;
             homepage.currentDoor = this;
+            if (!this.opened) this.opened = true;
         }
     }
 
@@ -54,33 +85,159 @@ class Door {
 
         push();
 
-        rectMode(CORNERS);
-        noStroke();
-        textAlign(CENTER, CENTER);
+        angleMode(DEGREES);
 
         translate(this.xPos*homepage.zoom, this.yPos*homepage.zoom);
-        if (this.hovering) fill(150);
-        else if (this.ready) fill(100);
-        else fill(25);
-        let quarter = this.doorSize*homepage.zoom/2;
 
-        if (this.openAmount == 0) {
-            rect(-quarter, -quarter, quarter, quarter);
+        let lightColour = this.palette.black;
+
+        if (!this.opened && this.ready) {
+            let amount = sin((frameCount+this.flashOffset)*5);
+            lightColour = lerpColor(color("#FFFFFF"), color("#FFE2AD"), amount);
+        }
+        else if (this.ready) lightColour = this.palette.light;
+
+        this.displayDetail(lightColour);
+
+        rectMode(CORNERS);
+        noStroke();
+
+        if (this.y == 4 && this.x == 2) {
+
+            this.displayFrontDoor(lightColour);
+
         } else {
-            rect(-quarter, -quarter, -quarter*this.openAmount, quarter);
-            rect(quarter*this.openAmount, -quarter, quarter, quarter);
+
+            let quarter = this.values.doorSize*homepage.zoom/2;
+            let weight = homepage.windowFrameStrokeWeight*homepage.zoom;
+            let quarterish = quarter-weight/2;
+            strokeWeight(weight);
+            stroke(this.palette.gold);
+            fill(lightColour);
+            rect(-quarterish, -quarterish, quarterish, quarterish);
+            line(-quarterish, 0, quarterish, 0);
+            line(0, -quarterish, 0, quarterish);
+            noStroke();
         }
 
-        if (this.ready) {
+        this.displayNumber();
 
-            fill(0, homepage.doorDateAlpha*255);
-            textSize(25);
-            text(this.date == 0 ? "X" : this.date, 0, 0);
-            fill(50, homepage.doorDateAlpha*255);
-            textSize(15);
+        pop();
+    }
+
+    displayFrontDoor(lightColour) {
+
+        let zoom = homepage.zoom;
+
+        let frameWeight = this.values.frameWeight*zoom;
+        let w = 80*zoom-frameWeight;
+        let h = 100*zoom-frameWeight;
+
+        push();
+        translate(0, -8.5*zoom);
+        rectMode(CENTER);
+        strokeWeight(frameWeight);
+        fill(lightColour);
+        stroke(this.palette.gold);
+        ellipse(0, -w/2-7*zoom-frameWeight/2, w);
+        line(-w/2, -w/2-7*zoom-frameWeight*1.5, w/2, -w/2-7*zoom-frameWeight*1.5);
+        fill(this.palette.gold);
+        stroke(this.palette.black);
+        rect(-w/4, 0, w/2, h);
+        rect(w/4, 0, w/2, h);
+        line(-7*zoom, 4*zoom, -7*zoom, 13*zoom);
+        line(7*zoom, 4*zoom, 7*zoom, 13*zoom);
+        pop();
+    }
+
+    displayDetail(lightColour) {
+
+        let zoom = homepage.zoom;
+        let doorSize = this.values.doorSize;
+        let doorSizeZoom = doorSize*zoom;
+        let halfDoorZoom = doorSizeZoom/2;
+        let frameWeight = this.values.frameWeight*zoom;
+
+        if (this.y == 4 && this.x == 2) {
+
+            //
+
+        } else if (this.y == 0) {
+
+            push();
+            noStroke();
+            fill(this.palette.dark);
+            ellipse(0, -halfDoorZoom+frameWeight/2, doorSizeZoom);
+            pop();
+
+        } else if (this.y >= 1 && this.y <= 3) {
+
+            push();
+            noStroke();
+            fill(this.palette.black);
             rectMode(CENTER);
-            text(days[this.date].label, 0, 30, this.doorSize);
+            rect(0, (doorSize/2+5)*zoom, 76*zoom, 10*zoom);
+            let h = 16 * zoom;
+            let w = 6 * zoom;
+            translate(0, -halfDoorZoom);
+            quad(-halfDoorZoom, 0, halfDoorZoom, 0, halfDoorZoom+w, -h, -halfDoorZoom-w, -h);
+            pop();
+
+        } else if (this.y == 4) {
+
+            push();
+            stroke(this.palette.gold);
+            strokeWeight(frameWeight);
+            fill(lightColour);
+            ellipse(0, -halfDoorZoom+frameWeight/2, doorSizeZoom-frameWeight);
+            line(0, -halfDoorZoom, 0, -doorSizeZoom+frameWeight);
+            noStroke();
+            fill(this.palette.black);
+            rectMode(CENTER);
+            rect(0, (doorSize/2+5)*zoom, 76*zoom, 10*zoom);
+            pop();
         }
+    }
+
+    displayNumber() {
+
+        if (!this.ready) return;
+
+        let textColour = color(0);
+        textColour.setRed(red(this.palette.black));
+        textColour.setGreen(green(this.palette.black));
+        textColour.setBlue(blue(this.palette.black));
+        textColour.setAlpha(homepage.doorDateAlpha*255);
+
+        let zoom = homepage.zoom;
+        let quarter = this.values.doorSize*zoom/4 - 1.5;
+
+        push();
+
+        if (this.y == 4 && this.x == 2) translate(0, -74*zoom);
+        else if (this.numberOffset == 0) translate(quarter, quarter);
+        else if (this.numberOffset == 1) translate(-quarter, quarter);
+        else if (this.numberOffset == 2) translate(quarter, -quarter);
+        else if (this.numberOffset == 3) translate(-quarter, -quarter);
+
+        if (this.hovering) {
+            angleMode(DEGREES);
+            rotate(sin(frameCount*6)*10);
+            // rotate(45);
+            textSize(25);
+        } else {
+            textSize(22);
+        }
+
+        translate(0, -2);
+
+        stroke(textColour);
+        strokeWeight(1);
+        textAlign(CENTER, CENTER);
+        textFont(fonts.redressed);
+        fill(textColour);
+        text(this.date, 0, 0);
+
         pop();
     }
 }

@@ -1,11 +1,11 @@
 // Made by Firstname Lastname (keep this line and replace with your name)
 
-function dayXPreload() {
+function day10Preload() {
 
     // Load any assets here (with assets.dayX at the front of the variable name)
 }
 
-class DayX extends Day {
+class Day10 extends Day {
 
     constructor () {
 
