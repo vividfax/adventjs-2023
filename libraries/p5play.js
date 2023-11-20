@@ -1,6 +1,6 @@
 /**
  * p5play
- * @version 3.16
+ * @version 3.17
  * @author quinton-ashley
  * @license gpl-v3-only
  */
@@ -179,8 +179,20 @@ p5.prototype.registerMethod('init', function p5playInit() {
          * </a>
          *
          * The Sprite constructor can be used in many different ways.
+         *
+         * In fact it's so flexible that I've only listed out some of the
+         * most common ways it can be used in the examples section below.
+         * Try experimenting with it! It's likely to work the way you
+         * expect it to, if not you'll just get an error.
+         *
+         * Special feature! If the first parameter to this constructor is a
+         * loaded p5.Image, SpriteAnimation, or name of a SpriteAnimation,
+         * then the Sprite will be created with that animation. If the
+         * dimensions of the sprite are not given, then the Sprite will be
+         * created using the dimensions of the animation.
+         *
          * Every sprite you create is added to the `allSprites`
-         * group and put on the top layer, in front of all
+         * group and put on the top draw order layer, in front of all
          * previously created sprites.
          *
          * @param {Number} [x] - horizontal position of the sprite
@@ -194,11 +206,13 @@ p5.prototype.registerMethod('init', function p5playInit() {
          * 'static', 'kinematic', or 'none'
          * @example
          *
-         * let sprite = new Sprite();
+         * let spr = new Sprite();
          *
          * let rectangle = new Sprite(x, y, width, height);
          *
          * let circle = new Sprite(x, y, diameter);
+         *
+         * let spr = new Sprite(aniName, x, y);
          *
          * let line = new Sprite(x, y, [length, angle]);
          */
@@ -244,30 +258,45 @@ p5.prototype.registerMethod('init', function p5playInit() {
                 throw new FriendlyError('Sprite', 0, [args[0]]);
             }
 
-            x = args[0];
-            y = args[1];
-            w = args[2];
-            h = args[3];
-            collider = args[4];
-
-            if (Array.isArray(x)) {
+            if (!Array.isArray(args[0])) {
+                // valid use for creating a box collider:
+                // new Sprite(x, y, w, h, colliderType)
+                x = args[0];
+                y = args[1];
+                w = args[2];
+                h = args[3];
+                collider = args[4];
+            } else {
+                // valid use for creating chain/polygon using vertex mode:
+                // new Sprite([[x1, y1], [x2, y2], ...], colliderType)
                 x = undefined;
                 y = undefined;
                 w = args[0];
-                h = args[1];
-                collider = args[2];
+                h = undefined;
+                collider = args[1];
+                if (Array.isArray(collider)) {
+                    throw new FriendlyError('Sprite', 1, [`[[${w}], [${h}]]`]);
+                }
             }
 
-            // valid use to create a circle: new Sprite(x, y, d, colliderType)
+            // valid use without setting size:
+            // new Sprite(x, y, colliderType)
+            if (typeof w == 'string') {
+                collider = w;
+                w = undefined;
+            }
+
             if (typeof h == 'string') {
                 if (isColliderType(h)) {
+                    // valid use to create a circle:
+                    // new Sprite(x, y, d, colliderType)
                     collider = h;
                 } else {
+                    // valid use to create a regular polygon:
+                    // new Sprite(x, y, sideLength, polygonName)
                     w = getRegularPolygon(w, h);
                 }
                 h = undefined;
-            } else if (Array.isArray(h)) {
-                throw new FriendlyError('Sprite', 1, [`[[${w}], [${h}]]`]);
             }
 
             this.idNum = this.p.p5play.spritesCreated;
@@ -8340,13 +8369,12 @@ main {
                 $.textImage(ti, x, y);
                 return;
             }
-            let pd = $.pixelDensity();
             let tg = $.createGraphics.call($, 1, 1);
             c = tg.canvas.getContext('2d');
-            c.font = `${r._textStyle} ${r._textSize * pd}px ${r._textFont}`;
+            c.font = `${r._textStyle} ${r._textSize}px ${r._textFont}`;
             let lines = str.split('\n');
             cX = 0;
-            cY = r._textLeading * pd * lines.length;
+            cY = r._textLeading * lines.length;
             let m = c.measureText(' ');
             _ascent = m.fontBoundingBoxAscent;
             _descent = m.fontBoundingBoxDescent;
@@ -8354,7 +8382,7 @@ main {
             tg.resizeCanvas(Math.ceil(tg.textWidth(str)), Math.ceil(h));
             c.fillStyle = ctx.fillStyle;
             c.strokeStyle = ctx.strokeStyle;
-            c.lineWidth = ctx.lineWidth * pd;
+            c.lineWidth = ctx.lineWidth;
             let f = c.fillStyle;
             if (!r._fillSet) c.fillStyle = 'black';
             for (let i = 0; i < lines.length; i++) {
@@ -8365,10 +8393,11 @@ main {
             }
             if (!r._fillSet) c.fillStyle = f;
             ti = tg.get();
+            let pd = $.pixelDensity();
             ti.width /= pd;
             ti.height /= pd;
-            ti._ascent = _ascent / pd;
-            ti._descent = _descent / pd;
+            ti._ascent = _ascent;
+            ti._descent = _descent;
             $._tic.set(k, ti);
             $.textImage(ti, x, y);
         };

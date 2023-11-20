@@ -223,7 +223,6 @@ class Door {
         if (this.hovering) {
             angleMode(DEGREES);
             rotate(sin(frameCount*6)*10);
-            // rotate(45);
             textSize(25);
         } else {
             textSize(22);

@@ -33,6 +33,7 @@ function setup() {
 
     resetModes();
 
+    // textCache(false);
     // allSprites.autoDraw = false;
     // allSprites.autoUpdate = false;
     // world.autoStep = false;

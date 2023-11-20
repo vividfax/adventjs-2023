@@ -22,18 +22,6 @@ class Day3 extends Day {
     prerun() {
 
         // Initialise/reset variables here. Runs once, every time your day is viewed
-
-        // world.gravity.y = 10;
-
-        // let ball = new Sprite();
-        // ball.diameter = 50;
-        // ball.y = 30;
-
-        // let floor = new Sprite();
-        // floor.y = 190;
-        // floor.w = 238;
-        // floor.h = 5;
-        // floor.collider = 'static';
     }
 
     update() {
