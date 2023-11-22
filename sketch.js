@@ -1,7 +1,7 @@
 let today = 0;
 
 let days = [];
-let totalDays = 1;
+let daysToReveal;
 
 let assets = {};
 
@@ -56,7 +56,7 @@ function setup() {
     };
 
     createDays();
-    changeDay(today);
+    daysToReveal = getDaysToReveal();
 
     homepage = new Homepage();
 }
@@ -85,10 +85,19 @@ function draw() {
     resetModes();
     // image(debugCanvas, 0, 0);
     // debugCanvas.clear();
+}
 
-    
-    
+function getDaysToReveal() {
 
+    let todayDate = new Date();
+    let startDate = new Date("2023-12-01");
+    // todayDate = startDate; // debug delete later
+    let timeSinceStart = (todayDate.getTime()+1) - startDate.getTime();
+    timeSinceStart /= 24 * 60 * 60 * 1000;
+    timeSinceStart = ceil(timeSinceStart);
+
+    // console.log(timeSinceStart);
+    return timeSinceStart;
 }
 
 function createDays() {
@@ -243,8 +252,13 @@ function keyPressed() {
 
     if (!homepage.visible || (homepage.visible && homepage.doorOpen)) days[today].keyPressed();
     else {
-        if (keyCode == 187) changeDay(totalDays++);
-        else if (keyCode == 189) changeDay(totalDays--);
+        if (keyCode == 187) { // debug delete later
+            daysToReveal++;
+            console.log(daysToReveal);
+        } else if (keyCode == 189) { // debug delete later
+            daysToReveal--;
+            console.log(daysToReveal);
+        }
     }
 }
 

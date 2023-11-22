@@ -22,13 +22,13 @@ class Door {
         this.clicked = false;
         this.opened = false;
 
-        this.ready = this.date <= totalDays;
+        this.ready = this.date <= daysToReveal;
         // this.ready = true; // delete this later
     }
 
     update() {
 
-        this.ready = this.date <= totalDays; // debug
+        this.ready = this.date <= daysToReveal; // debug
 
         if (!this.ready) return;
 
@@ -160,7 +160,7 @@ class Door {
 
         if (this.y == 4 && this.x == 2) {
 
-            //
+            // do nothing
 
         } else if (this.y == 0) {
 
