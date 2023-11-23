@@ -91,7 +91,7 @@ function getDaysToReveal() {
 
     let todayDate = new Date();
     let startDate = new Date("2023-12-01");
-    // todayDate = startDate; // debug delete later
+    todayDate = startDate; // debug delete later
     let timeSinceStart = (todayDate.getTime()+1) - startDate.getTime();
     timeSinceStart /= 24 * 60 * 60 * 1000;
     timeSinceStart = ceil(timeSinceStart);
@@ -258,6 +258,8 @@ function keyPressed() {
         } else if (keyCode == 189) { // debug delete later
             daysToReveal--;
             console.log(daysToReveal);
+        } else if (keyCode == 8) { // debug delete later
+            clearStorage();
         }
     }
 }

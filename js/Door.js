@@ -20,7 +20,7 @@ class Door {
 
         this.hovering = false;
         this.clicked = false;
-        this.opened = false;
+        this.opened = getItem(date);
 
         this.ready = this.date <= daysToReveal;
         // this.ready = true; // delete this later
@@ -77,7 +77,10 @@ class Door {
             this.clicked = true;
             homepage.enteringDoor = true;
             homepage.currentDoor = this;
-            if (!this.opened) this.opened = true;
+            if (!this.opened) {
+                this.opened = true;
+                storeItem(this.date.toString(), true);
+            }
         }
     }
 
