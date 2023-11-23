@@ -96,6 +96,7 @@ class Door {
 
         if (!this.opened && this.ready) {
             let amount = sin((frameCount+this.flashOffset)*5);
+            amount = map(amount, -1, 1, 0, 1);
             lightColour = lerpColor(color("#FFFFFF"), color("#FFE2AD"), amount);
         }
         else if (this.ready) lightColour = this.palette.light;
