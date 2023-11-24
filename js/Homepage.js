@@ -527,7 +527,7 @@ class Homepage {
                 yOffset = -12;
             }
             else w = 250*zoom;
-            let count = abs(i)%2 == 1 ? 1 : 0;
+            let count = i%2 == 1 ? 1 : 0;
             for (let j = -w-1; j <= w+1; j+=10*zoom) {
 
                 // let cosW = (i == 0 || i == -1) ? 5/zoom : 5/zoom;
