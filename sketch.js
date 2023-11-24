@@ -255,9 +255,13 @@ function keyPressed() {
         if (keyCode == 187) { // debug delete later
             daysToReveal++;
             console.log(daysToReveal);
+            homepage.treeTinselA = homepage.createTreeTinsel();
+            homepage.treeTinselB = homepage.createTreeTinsel();
         } else if (keyCode == 189) { // debug delete later
             daysToReveal--;
             console.log(daysToReveal);
+            homepage.treeTinselA = homepage.createTreeTinsel();
+            homepage.treeTinselB = homepage.createTreeTinsel();
         } else if (keyCode == 8) { // debug delete later
             clearStorage();
         }

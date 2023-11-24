@@ -62,6 +62,10 @@ class Homepage {
         this.threeD = createGraphics(width, height, WEBGL);
         this.twoDWindow = this.create2DWindow();
         this.twoDFrontDoor = this.create2DFrontDoor();
+        this.treeMask = this.createTreeMask();
+        this.treeTinselA = this.createTreeTinsel();
+        this.treeTinselB = this.createTreeTinsel();
+        this.snow = this.setupSnow();
     }
 
     defaultOpenOnX() {
@@ -109,6 +113,94 @@ class Homepage {
         twoD.line(width-7*this.maxZoom, h/2-4.5*this.maxZoom, width-7*this.maxZoom, h/2+4.5*this.maxZoom);
 
         return twoD;
+    }
+
+    createTreeMask() {
+
+        let layer = createGraphics(160*this.maxZoom, 295*this.maxZoom);
+
+        layer.push();
+        layer.translate(160*this.maxZoom/2, 0);
+        for (let i = 2; i < 6; i++) {
+            let w2 = 32*i*this.maxZoom;
+            let h2 = 35*i*this.maxZoom;
+            layer.triangle(-w2/2, h2, 0, 0, w2/2, h2);
+            layer.translate(0, 10*i*this.maxZoom);
+        }
+
+        layer.pop();
+
+        return layer;
+    }
+
+    createTreeTinsel() {
+
+        let layer = createGraphics(160*this.maxZoom, 295*this.maxZoom);
+        layer.translate(layer.width/2, 0);
+
+        layer.background(this.palette.black);
+        layer.noFill();
+
+        let colour1 = this.palette.mid;
+        let colour2 = this.palette.dark;
+
+        if (daysToReveal < 3) colour2 = color(0, 0);
+        if (daysToReveal < 7) colour1 = color(0, 0);
+
+        let num = 8;
+        for (let i = num-1; i >= 1; i--) {
+
+            let weight = i%2 == 1 ? 160 : 80;
+            layer.strokeWeight(weight);
+            let colour = i%2 == 1 ? colour1 : colour2;
+            layer.stroke(colour);
+            layer.ellipse(random(-layer.width/14*i, layer.width/14*i), 0, layer.height*2/num*(i+0.4));
+        }
+
+        let maskedTinsel = layer.get();
+        maskedTinsel.mask(this.treeMask);
+        layer.clear();
+        layer.image(maskedTinsel, -layer.width/2, 0, layer.width, layer.height);
+
+        layer.noStroke();
+
+        colour1 = this.palette.light;
+        colour2 = this.palette.gold;
+
+        if (daysToReveal < 10) colour2 = color(0, 0);
+        if (daysToReveal < 15) colour1 = color(0, 0);
+
+        for (let i = 1; i < 10; i++) {
+            let n = int(i*0.6+0.5);
+            let w = -130*n;
+            let x = w;
+            let rand = random([0, 1]);
+            let rand2 = random([0, 1]);
+            for (let j = 0; j <= n; j++) {
+                layer.push();
+                layer.translate(x, layer.height/10*i-10);
+                let offset = 45;
+                layer.translate(random(-offset, offset), random(-offset, offset));
+                let colour = (j+rand)%2 == 0 ? colour1 : colour2;
+                layer.fill(colour);
+                layer.ellipse(0, 0, 130);
+                x -= (w*2)/n;
+                layer.pop();
+            }
+        }
+
+        return layer;
+    }
+
+    setupSnow() {
+
+        let snow = [];
+
+        for (let i = 0; i < 700; i++) {
+            snow.push(new this.Snow(this.zoom, this.palette.white));
+        }
+
+        return snow;
     }
 
     update() {
@@ -222,6 +314,8 @@ class Homepage {
             }
         }
 
+        this.displayFairyLights();
+
         pop();
 
         // today = 24;
@@ -236,11 +330,8 @@ class Homepage {
         rectMode(CENTER);
         noStroke();
 
-        background("#111")
         background(this.palette.gold);
-
-        fill(this.palette.gold);
-        rect(0, 0, width*zoom, height*zoom);
+        this.displaySnow();
 
         fill(this.palette.white);
         rect(0, 316*zoom+450*zoom, width*zoom*2, 68*zoom+1000*zoom);
@@ -268,32 +359,190 @@ class Homepage {
         pop();
 
         this.displayTrees();
+        this.displaySnowman(zoom);
+    }
+
+    displaySnow() {
+
+        push();
+
+        let snowPercent = (daysToReveal-1)/25;
+        snowPercent = constrain(snowPercent, 0, 1);
+
+        for (let i = 0; i < this.snow.length*snowPercent; i++) {
+            this.snow[i].display(this.zoom);
+        }
+
+        pop();
     }
 
     displayTrees() {
 
         let zoom = this.zoom;
 
-        let w = 147*zoom;
-        let h = 267*zoom;
-        let x = 307*zoom;
+        let x = 317*zoom;
         let y = 68*zoom;
 
         push();
 
-        rectMode(CENTER);
-
-        noStroke();
-        fill(this.palette.black);
-
         translate(x, y);
-        triangle(-w/2, h, 0, 0, w/2, h);
-        rect(0, h, 24*zoom, 40*zoom);
+        this.displayTree(zoom, this.treeTinselA);
 
         translate(-x*2, 0);
-        triangle(-w/2, h, 0, 0, w/2, h);
+        this.displayTree(zoom, this.treeTinselB);
+
+        pop();
+    }
+
+    displayTree(zoom, tinselLayer) {
+
+        rectMode(CENTER);
+        noStroke();
+
+        this.displayTreeBase(zoom);
+        image(tinselLayer, -160/2*zoom, 0, 160*zoom, 295*zoom);
+        this.displayStars(zoom);
+    }
+
+    displayTreeBase(zoom) {
+
+        let h = 267*zoom;
+
+        fill(this.palette.black);
         rect(0, h, 24*zoom, 40*zoom);
 
+        // push();
+
+        // for (let i = 2; i < 6; i++) {
+        //     let w2 = 32*i*zoom;
+        //     let h2 = 35*i*zoom;
+        //     triangle(-w2/2, h2, 0, 0, w2/2, h2);
+        //     translate(0, 10*i*zoom);
+        // }
+
+        // pop();
+    }
+
+    displayStars(zoom) {
+
+        if (daysToReveal < 19) return;
+
+        push();
+        translate(0, 3*zoom);
+        angleMode(DEGREES);
+        rotate(-90);
+        angleMode(RADIANS);
+
+        fill(this.palette.white);
+        this.displayStar(0, 0, 8*zoom, 5);
+
+        // for (let i = 0; i < 7; i++) {
+
+        //     let colour = lerpColor(this.palette.white, this.palette.gold, i/6)
+        //     fill(colour);
+        //     this.displayStar(0, 0, 7-i*0.7*zoom, 5);
+        // }
+        pop();
+    }
+
+    displayStar(x, y, radius, npoints) {
+        let angle = TWO_PI / npoints;
+        let halfAngle = angle / 2.0;
+        beginShape();
+        for (let a = 0; a < TWO_PI; a += angle) {
+          let sx = x + cos(a) * radius*2;
+          let sy = y + sin(a) * radius*2;
+          vertex(sx, sy);
+          sx = x + cos(a + halfAngle) * radius;
+          sy = y + sin(a + halfAngle) * radius;
+          vertex(sx, sy);
+        }
+        endShape(CLOSE);
+    }
+
+    displaySnowman(zoom) {
+
+        push();
+        translate(-160*zoom, 273*zoom);
+        noStroke();
+        fill(this.palette.dark);
+        let weight = 3*zoom;
+
+        for (let i = 0; i < 2; i++) {
+
+            if (i > 0) fill(this.palette.white);
+            if (daysToReveal >= 20) ellipse(0, 0, 30*zoom-i*weight);
+            if (daysToReveal >= 17) ellipse(0, 23*zoom, 38*zoom-i*weight);
+            if (daysToReveal >= 12) ellipse(0, 47*zoom, 45*zoom-i*weight);
+        }
+
+        if (daysToReveal >= 23) {
+
+            fill(this.palette.black);
+            translate(2*zoom, 5*zoom);
+
+            ellipse(-6*zoom, -6*zoom, 3.5*zoom);
+            ellipse(6*zoom, -6*zoom, 3.5*zoom);
+
+            for (let i = -2; i <= 2; i++) {
+                ellipse(i*2*zoom, cos(i)*1.5*zoom, 2*zoom);
+            }
+
+            let w = 3*zoom;
+            let h = 7*zoom;
+            fill(this.palette.gold);
+            translate(0, -4*zoom);
+            rotate(5);
+            ellipse(0, 0, w);
+            triangle(-w/2, 0, w/2, 0, 0, h);
+        }
+
+        pop();
+    }
+
+    displayFairyLights() {
+
+        // this.zoom = 3;
+
+        let zoom = this.zoom;
+
+        push();
+        translate(0, -195*zoom);
+        noStroke();
+
+        let w = 280*zoom;
+        let start = 4;
+
+        if (daysToReveal >= 22) start = -1;
+        else if (daysToReveal >= 18) start = 0;
+        else if (daysToReveal >= 13) start = 1;
+        else if (daysToReveal >= 8) start = 2;
+        else if (daysToReveal >= 5) start = 3;
+
+        for (let i = start; i < 4; i++) {
+            let yOffset = 0;
+            if (i == 0) w = 290*zoom;
+            else if (i == -1) {
+                w = 220*zoom;
+                yOffset = -12;
+            }
+            else w = 250*zoom;
+            let count = abs(i)%2 == 1 ? 1 : 0;
+            for (let j = -w-1; j <= w+1; j+=10*zoom) {
+
+                // let cosW = (i == 0 || i == -1) ? 5/zoom : 5/zoom;
+                let cosW = 5/zoom;
+                // let colourOffset = (int(i+(frameCount*0.01)))%2 == 0; // animate
+                // let colourOffset = i%2 == 0;
+                // let colourOffset = 1;
+
+                let colour = count%2 == 0 ? this.palette.light : this.palette.gold;
+                fill(colour);
+                ellipse(j, (cos(j*cosW)*5 + i*116.5 + yOffset)*zoom, 6*zoom);
+
+                count++;
+            }
+        }
         pop();
     }
 
@@ -321,5 +570,31 @@ class Homepage {
         rotate(180);
         image(this.threeD, 0, 0);
         pop();
+    }
+
+    Snow = class {
+
+        constructor(zoom, colour) {
+
+            this.padding = 250;
+            this.x = random(-this.padding, width+this.padding);
+            this.y = random(-this.padding, height);
+            this.radius = random(3, 6)*zoom;
+            this.colour = colour;
+        }
+
+        display(zoom) {
+
+            this.x += random(-0.5, 1);
+            this.y += random(0.5, 1.5);
+
+            if (this.x > width+this.padding) this.x = -this.padding;
+            if (this.x < -this.padding) this.x = width+this.padding;
+            if (this.y > height) this.y = -this.padding;
+
+            noStroke();
+            fill(this.colour);
+            ellipse((this.x-width/2)*zoom, (this.y-height/2)*zoom, this.radius);
+        }
     }
 }
