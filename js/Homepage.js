@@ -30,7 +30,7 @@ class Homepage {
             16, 3, 22, 8, 19,
             21, 7, 2, 13, 23,
             24, 6, 17, 11, 14,
-            18, 10, 25, 1, 5
+            10, 18, 25, 1, 5
         ];
         this.doors = [];
 
@@ -333,7 +333,8 @@ class Homepage {
         background(this.palette.gold);
         this.displaySnow();
 
-        fill(this.palette.white);
+        if (daysToReveal < 9) fill(this.palette.mid);
+        else fill(this.palette.white);
         rect(0, 316*zoom+450*zoom, width*zoom*2, 68*zoom+1000*zoom);
 
         let w1 = 442/2*zoom;
