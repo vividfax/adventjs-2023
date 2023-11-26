@@ -5,34 +5,62 @@ body {
     background-color: #111;
 }
 
-#canvas-wrapper {
+#container {
+    width: 100%;
     margin: auto;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: end;
+}
+
+#canvas-wrapper {
+    float: left;
     z-index: -1;
 }
 
-canvas {
-    margin-bottom: 60px;
+#pad {
+    width: calc((100% - 700px - 20px*4)/2);
+    height: 10px;
+    padding: 20px;
+    float: left;
 }
 
 #info {
+    float: left;
     color: #fff;
     font-size: 16px;
     font-family: monospace;
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 320px);
     z-index: 1;
 }
 
 #credits {
     color: #aaa;
+}
+
+/* info below */
+@media (min-height: 815px) {
+    canvas {
+        margin-bottom: 60px;
+    }
+    #info {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 320px);
+    }
+}
+
+/* side info */
+@media (max-height: 814px) {
+    #info {
+        width: calc((100% - 700px - 20px*4)/2);
+        padding: 20px;
+    }
 }
 
 .no-select {
