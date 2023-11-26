@@ -1,3 +1,5 @@
+let debugOn = true; // make sure this is set to false before uploading
+
 let today = 0;
 
 let days = [];
@@ -91,7 +93,7 @@ function getDaysToReveal() {
 
     let todayDate = new Date();
     let startDate = new Date("2023-12-01");
-    todayDate = startDate; // debug delete later
+    if (debugOn) todayDate = startDate; // debug delete later
     let timeSinceStart = (todayDate.getTime()+1) - startDate.getTime();
     timeSinceStart /= 24 * 60 * 60 * 1000;
     timeSinceStart = ceil(timeSinceStart);
@@ -251,7 +253,7 @@ function mouseReleased() {
 function keyPressed() {
 
     if (!homepage.visible || (homepage.visible && homepage.doorOpen)) days[today].keyPressed();
-    else {
+    else if (debugOn) {
         if (keyCode == 187) { // debug delete later
             daysToReveal++;
             console.log(daysToReveal);
