@@ -1,216 +1,148 @@
-// Made my Rianna Suen - interactive example
+// Made by Chris Allen
 
 class Day2 extends Day {
 
     constructor () {
 
         super();
-        this.loop = true;
-        this.controls = "WASD or ARROW KEYS to move";
-        this.credits = "Made by Rianna Suen";
-        this.label = "interactive example";
+        this.loop = false; // Set to true or false
 
-        this.mapSize = width*2;
-        this.player = new this.Player(this.mapSize);
+        this.controls = "CLICK for a new, possibly even uglier, sweater"; // Write any controls for interactivity if needed or leave blank
+        this.credits = "Made by Chris Allen"; // Replace with your name
 
-        this.trailCanvas = createGraphics(this.mapSize, this.mapSize);
+        // Define variables here. Runs once during the sketch holder setup
+        this.makePattern();
+        this.knitPattern();
+        this.threadA();
+        this.threadB();
 
-        this.cameraX = 0;
-        this.cameraY = 0;
-
-        this.snowColliders = [];
-        this.setupSnowColliders();
-
-        this.colours = {
-            snow: "#fff",
-            grass: "#5B9554",
-        };
-    }
-
-    setupSnowColliders() {
-
-        let density = 50;
-        let padding = this.mapSize/density;
-
-        for (let i = 1; i < density; i++) {
-            for (let j = 1; j < density; j++) {
-                let x = padding*i;
-                let y = padding*j;
-                this.snowColliders.push(new this.SnowCollider(x, y, padding));
-            }
-        }
+        this.threadWidth = 2.5;
+        this.threadNoise = 2.5;
+        this.threadCount = 25;
+        this.threadLength = 4;
+        this.threadSpacingY = 5.5;
+        this.threadSpacingX = 6.5;
     }
 
     prerun() {
-
-        this.trailCanvas.clear();
-
-        this.player.reset();
-
-        this.cameraX = 0;
-        this.cameraY = 0;
-
-        for (let i = 0; i < this.snowColliders.length; i++) {
-            this.snowColliders[i].reset();
-        }
+        // Initialise/reset variables here. Runs once, every time your day is viewed
     }
 
     update() {
+        // Update and draw stuff here. Runs continuously (or only once if this.loop = false), while your day is being viewed
+        this.backgroundThreadColor = random(['rgba(74,149,77,0.5)','rgba(149,74,77,0.5)','rgba(129,74,147,0.5)']);
 
-        this.player.update();
-        this.moveCamera();
+        pixelDensity (1);
+        this.makePattern ();
+        loadPixels();
 
-        for (let i = 0; i < this.snowColliders.length; i++) {
-            this.snowColliders[i].collide(this.player);
-        }
+        //return;
 
-        this.display();
+        background(30);
+
+        this.knitPattern();
     }
 
-    display() {
+    makePattern() {
+        let maxHeight = height/this.threadSpacingY;
+        let maxWidth = width/this.threadSpacingX;
+        let halfMaxHeight = floor(maxHeight/2) + 4;
+        let imgY = halfMaxHeight;
 
-        background(this.colours.snow);
-        this.displayTrail();
-        this.displayPlayer();
-    }
-
-    displayTrail() {
-
-        this.trailCanvas.noStroke();
-        this.trailCanvas.fill(this.colours.grass);
-        this.trailCanvas.ellipse(this.player.x, this.player.y, this.player.radius*2);
-
-        image(this.trailCanvas, width/2-this.player.x+this.cameraX, height/2-this.player.y+this.cameraY, this.mapSize, this.mapSize);
-    }
-
-    displayPlayer() {
-
-        noStroke();
-        fill(this.colours.snow);
-        ellipse(width/2+this.cameraX, height/2+this.cameraY, this.player.radius*2);
-
-        if (this.player.radius > 25) {
-
-            push();
-
-            translate(width/2+this.cameraX, height/2+this.cameraY);
-            translate(0, sin(frameCount*0.05)*2);
-            rotate(sin(frameCount*0.03)*0.05);
-            imageMode(CENTER);
-            image(assets.day2SnowmanFace, 0, 0, 40, 40);
-
-            pop();
+        let pos = floor(random(assets.day2Tiles.length));
+        let img = assets.day2Tiles[pos];
+        let imgX = 0;
+        while (imgX < maxWidth) {
+            image(img, imgX, imgY - floor(img.height/2));
+            imgX = imgX + img.width;
         }
-    }
+        imgY = imgY + floor(img.height/2) + 3;
 
-    moveCamera() {
+        pos = floor(random(assets.day2Banners.length));
+        while (imgY < maxHeight) {
+            pos = (pos + floor(random(assets.day2Banners.length - 1) + 1))%(assets.day2Banners.length);
+            let img = assets.day2Banners[pos];
 
-        if (this.player.x < width/2) {
-            this.cameraX = this.player.x-width/2;
-        }
-        if (this.player.x > this.mapSize-width/2) {
-            this.cameraX = width/2-this.mapSize+this.player.x;
-        }
-        if (this.player.y < height/2) {
-            this.cameraY = this.player.y-height/2;
-        }
-        if (this.player.y > this.mapSize-height/2) {
-            this.cameraY = height/2-this.mapSize+this.player.y;
-        }
-    }
-
-    Player = class {
-
-        constructor(mapSize) {
-
-            this.mapSize = mapSize;
-
-            this.reset(mapSize);
-        }
-
-        reset() {
-
-            this.x = this.mapSize/2;
-            this.y = this.mapSize/2;
-            this.velX = 0;
-            this.velY = 0;
-            this.radius = 10;
-        }
-
-        update() {
-
-            this.move();
-        }
-
-        move() {
-
-            let friction = 0.93;
-
-            this.velX *= friction;
-            this.velY *= friction;
-
-            this.x += this.velX;
-            this.y += this.velY;
-
-            if (this.x > this.mapSize-this.radius) this.x = this.mapSize-this.radius;
-            if (this.x < this.radius) this.x = this.radius;
-            if (this.y > this.mapSize-this.radius) this.y = this.mapSize-this.radius;
-            if (this.y < this.radius) this.y = this.radius;
-
-            if (!keyIsPressed) return;
-
-            let speed = 0.3;
-
-            let pressingLeft = keyIsDown(LEFT_ARROW) || keyIsDown(65);
-            let pressingRight = keyIsDown(RIGHT_ARROW) || keyIsDown(68);
-            let pressingUp = keyIsDown(UP_ARROW) || keyIsDown(87);
-            let pressingDown = keyIsDown(DOWN_ARROW) || keyIsDown(83);
-
-            if (pressingLeft && pressingRight) {
-                // do nothing
-            } else if (pressingLeft) {
-                this.velX -= speed;
-            } else if (pressingRight) {
-                this.velX += speed;
+            let imgX = 0;
+            while (imgX < maxWidth) {
+                image(img, imgX, imgY);
+                image(img, imgX, halfMaxHeight - (imgY - halfMaxHeight) - img.height);
+                imgX = imgX + img.width;
             }
-
-            if (pressingUp && pressingDown) {
-                // do nothing
-            } else if (pressingUp) {
-                this.velY -= speed;
-            } else if (pressingDown) {
-                this.velY += speed;
-            }
+            imgY = imgY + img.height + 1;
         }
     }
 
-    SnowCollider = class {
+    knitPattern() {
+        for (let x = 0;
+             x * this.threadSpacingX < width;
+             x++)
+        {
+          for (let y = 0;
+               y * this.threadSpacingY < height;
+               y++)
+          {
 
-        constructor(x, y, radius) {
+            let pixelIndex = (x + y * width) * 4;
 
-            this.x = x;
-            this.y = y;
-            this.radius = radius/2;
+            if (pixels[pixelIndex] > 100)
+              {
+                stroke (color(pixels[pixelIndex],pixels[pixelIndex+1],pixels[pixelIndex+2], 128));
+              }
+            else
+              {
+                stroke (this.backgroundThreadColor);
+              }
 
-            this.reset();
-        }
-
-        reset() {
-
-            this.collided = false;
-        }
-
-        collide(player) {
-
-            if (this.collided) return;
-
-            let distance = dist(this.x, this.y, player.x, player.y);
-            let radii = this.radius + player.radius;
-
-            if (distance < radii) {
-                this.collided = true;
-                player.radius += 0.1;
+            for (let i = 0; i < this.threadCount; i++) {
+                this.threadA (2 * x * this.threadSpacingX, y * this.threadSpacingY);
+                this.threadB ((2 * x + 1) * this.threadSpacingX, y * this.threadSpacingY);
             }
+          }
+        }
+    }
+
+    threadA (x, y) {
+        let rand = random(this.threadWidth);
+
+        line (x + random(this.threadNoise),
+              y - rand + random(this.threadNoise),
+              x + this.threadLength + random(this.threadNoise),
+              y - rand + this.threadLength + random(this.threadNoise));
+    }
+
+    threadB (x, y) {
+        let rand = random(this.threadWidth);
+
+        line (x + random(this.threadNoise),
+              y - rand + this.threadLength + random(this.threadNoise),
+              x + this.threadLength + random(this.threadNoise),
+              y - rand + random(this.threadNoise));
+    }
+
+    // Below are optional functions for interactivity. They can be deleted from this file if you want
+    mousePressed() {
+        this.update();
+    }
+
+    mouseReleased() {
+
+    }
+
+    keyPressed() {
+
+    }
+
+    keyReleased() {
+
+    }
+
+    // Below is the basic setup for a nested class. This can be deleted or renamed
+
+    HelperClass = class {
+
+        constructor() {
+
         }
     }
 }

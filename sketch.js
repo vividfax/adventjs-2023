@@ -48,7 +48,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    // daysToReveal = 25;
+    daysToReveal = 3;
 
     homepage = new Homepage();
 }
@@ -71,10 +71,10 @@ function draw() {
     if (homepage.visible) {
         homepage.update();
         homepage.display();
+        resetModes();
     }
 
     updatePageBackground();
-    resetModes();
     // image(debugCanvas, 0, 0);
     // debugCanvas.clear();
 }
@@ -105,7 +105,7 @@ function changeDay(date) {
 
     today = date;
 
-    resetP5Play();
+    // resetP5Play();
 
     clear();
 
@@ -132,6 +132,7 @@ function resetModes() {
     imageMode(CORNER);
     angleMode(RADIANS);
     textureMode(IMAGE);
+    // pixelDensity(displayDensity());
 }
 
 function resetSeeds(){
@@ -157,6 +158,13 @@ function resetP5Play() {
     // world.gravity.x = 0;
     // world.gravity.y = 0;
     // world.allowSleeping = true;
+}
+
+function cleanupOnExit() {
+
+    updateInfo(-1);
+    cursor();
+    pixelDensity(displayDensity());
 }
 
 function setupGrammar(grammarSource) {

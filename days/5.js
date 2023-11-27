@@ -1,59 +1,216 @@
-// Made by Firstname Lastname (keep this line and replace with your name)
-
-function day5Preload() {
-
-    // Load any assets here (with assets.dayX at the front of the variable name)
-}
+// Made my Rianna Suen - interactive example
 
 class Day5 extends Day {
 
     constructor () {
 
         super();
-        this.loop = true; // Set to true or false
+        this.loop = true;
+        this.controls = "WASD or ARROW KEYS to move";
+        this.credits = "Made by Rianna Suen";
+        this.label = "interactive example";
 
-        this.controls = ""; // Write any controls for interactivity if needed or leave blank
-        this.credits = "Made by Firstname Lastname"; // Replace with your name
+        this.mapSize = width*2;
+        this.player = new this.Player(this.mapSize);
 
-        // Define variables here. Runs once during the sketch holder setup
+        this.trailCanvas = createGraphics(this.mapSize, this.mapSize);
+
+        this.cameraX = 0;
+        this.cameraY = 0;
+
+        this.snowColliders = [];
+        this.setupSnowColliders();
+
+        this.colours = {
+            snow: "#fff",
+            grass: "#5B9554",
+        };
+    }
+
+    setupSnowColliders() {
+
+        let density = 50;
+        let padding = this.mapSize/density;
+
+        for (let i = 1; i < density; i++) {
+            for (let j = 1; j < density; j++) {
+                let x = padding*i;
+                let y = padding*j;
+                this.snowColliders.push(new this.SnowCollider(x, y, padding));
+            }
+        }
     }
 
     prerun() {
 
-        // Initialise/reset variables here. Runs once, every time your day is viewed
+        this.trailCanvas.clear();
+
+        this.player.reset();
+
+        this.cameraX = 0;
+        this.cameraY = 0;
+
+        for (let i = 0; i < this.snowColliders.length; i++) {
+            this.snowColliders[i].reset();
+        }
     }
 
     update() {
 
-        // Update and draw stuff here. Runs continuously (or only once if this.loop = false), while your day is being viewed
+        this.player.update();
+        this.moveCamera();
 
-        background(200); // You can delete this line if you want
+        for (let i = 0; i < this.snowColliders.length; i++) {
+            this.snowColliders[i].collide(this.player);
+        }
+
+        this.display();
     }
 
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
+    display() {
 
-    mousePressed() {
-
+        background(this.colours.snow);
+        this.displayTrail();
+        this.displayPlayer();
     }
 
-    mouseReleased() {
+    displayTrail() {
 
+        this.trailCanvas.noStroke();
+        this.trailCanvas.fill(this.colours.grass);
+        this.trailCanvas.ellipse(this.player.x, this.player.y, this.player.radius*2);
+
+        image(this.trailCanvas, width/2-this.player.x+this.cameraX, height/2-this.player.y+this.cameraY, this.mapSize, this.mapSize);
     }
 
-    keyPressed() {
+    displayPlayer() {
 
+        noStroke();
+        fill(this.colours.snow);
+        ellipse(width/2+this.cameraX, height/2+this.cameraY, this.player.radius*2);
+
+        if (this.player.radius > 25) {
+
+            push();
+
+            translate(width/2+this.cameraX, height/2+this.cameraY);
+            translate(0, sin(frameCount*0.05)*2);
+            rotate(sin(frameCount*0.03)*0.05);
+            imageMode(CENTER);
+            image(assets.day0SnowmanFace, 0, 0, 40, 40);
+
+            pop();
+        }
     }
 
-    keyReleased() {
+    moveCamera() {
 
+        if (this.player.x < width/2) {
+            this.cameraX = this.player.x-width/2;
+        }
+        if (this.player.x > this.mapSize-width/2) {
+            this.cameraX = width/2-this.mapSize+this.player.x;
+        }
+        if (this.player.y < height/2) {
+            this.cameraY = this.player.y-height/2;
+        }
+        if (this.player.y > this.mapSize-height/2) {
+            this.cameraY = height/2-this.mapSize+this.player.y;
+        }
     }
 
-    // Below is the basic setup for a nested class. This can be deleted or renamed
+    Player = class {
 
-    HelperClass = class {
+        constructor(mapSize) {
 
-        constructor() {
+            this.mapSize = mapSize;
 
+            this.reset(mapSize);
+        }
+
+        reset() {
+
+            this.x = this.mapSize/2;
+            this.y = this.mapSize/2;
+            this.velX = 0;
+            this.velY = 0;
+            this.radius = 10;
+        }
+
+        update() {
+
+            this.move();
+        }
+
+        move() {
+
+            let friction = 0.93;
+
+            this.velX *= friction;
+            this.velY *= friction;
+
+            this.x += this.velX;
+            this.y += this.velY;
+
+            if (this.x > this.mapSize-this.radius) this.x = this.mapSize-this.radius;
+            if (this.x < this.radius) this.x = this.radius;
+            if (this.y > this.mapSize-this.radius) this.y = this.mapSize-this.radius;
+            if (this.y < this.radius) this.y = this.radius;
+
+            if (!keyIsPressed) return;
+
+            let speed = 0.3;
+
+            let pressingLeft = keyIsDown(LEFT_ARROW) || keyIsDown(65);
+            let pressingRight = keyIsDown(RIGHT_ARROW) || keyIsDown(68);
+            let pressingUp = keyIsDown(UP_ARROW) || keyIsDown(87);
+            let pressingDown = keyIsDown(DOWN_ARROW) || keyIsDown(83);
+
+            if (pressingLeft && pressingRight) {
+                // do nothing
+            } else if (pressingLeft) {
+                this.velX -= speed;
+            } else if (pressingRight) {
+                this.velX += speed;
+            }
+
+            if (pressingUp && pressingDown) {
+                // do nothing
+            } else if (pressingUp) {
+                this.velY -= speed;
+            } else if (pressingDown) {
+                this.velY += speed;
+            }
+        }
+    }
+
+    SnowCollider = class {
+
+        constructor(x, y, radius) {
+
+            this.x = x;
+            this.y = y;
+            this.radius = radius/2;
+
+            this.reset();
+        }
+
+        reset() {
+
+            this.collided = false;
+        }
+
+        collide(player) {
+
+            if (this.collided) return;
+
+            let distance = dist(this.x, this.y, player.x, player.y);
+            let radii = this.radius + player.radius;
+
+            if (distance < radii) {
+                this.collided = true;
+                player.radius += 0.1;
+            }
         }
     }
 }
