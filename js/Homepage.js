@@ -360,6 +360,13 @@ class Homepage {
         rect(0, -208*zoom, 602*zoom, 12*zoom);
         rect(0, -332*zoom, 442*zoom, 8*zoom);
 
+        for (let i = 0; i < 33; i++) {
+            let w = 15+i%3*5;
+            rect((-293+w/2)*zoom, (-192 + i*15)*zoom, w*zoom, 10*zoom);
+            w = 15+(i+1)%3*5;
+            rect((293-w/2)*zoom, (-192 + i*15)*zoom, w*zoom, 10*zoom);
+        }
+
         pop();
 
         this.displayTrees();
