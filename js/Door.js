@@ -209,18 +209,26 @@ class Door {
 
         if (!this.ready) return;
 
-        let textColour = color(0);
-        textColour.setRed(red(this.palette.black));
-        textColour.setGreen(green(this.palette.black));
-        textColour.setBlue(blue(this.palette.black));
-        textColour.setAlpha(homepage.doorDateAlpha*255);
+        let sourceColours = [this.palette.black, this.palette.dark];
+        let textColours = [];
+
+        for (let i = 0; i < sourceColours.length; i++) {
+
+            let colour = color(0);
+            colour.setRed(red(sourceColours[i]));
+            colour.setGreen(green(sourceColours[i]));
+            colour.setBlue(blue(sourceColours[i]));
+            colour.setAlpha(homepage.doorDateAlpha*255);
+            textColours.push(colour);
+        }
+
 
         let zoom = homepage.zoom;
         let quarter = this.values.doorSize*zoom/4 - 1.5;
 
         push();
 
-        if (this.y == 4 && this.x == 2) translate(0, -74*zoom);
+        if (this.y == 4 && this.x == 2) translate(0, -76*zoom);
         else if (this.numberOffset == 0) translate(quarter, -quarter);
         else if (this.numberOffset == 1) translate(quarter, quarter);
         else if (this.numberOffset == 2) translate(-quarter, quarter);
@@ -230,17 +238,18 @@ class Door {
             angleMode(DEGREES);
             rotate(sin(frameCount*6)*10);
             textSize(25);
+            stroke(textColours[0]);
+            fill(textColours[0]);
         } else {
-            textSize(22);
+            textSize(18);
+            stroke(textColours[1]);
+            fill(textColours[1]);
         }
 
         translate(0, -2);
-
-        stroke(textColour);
-        strokeWeight(1);
         textAlign(CENTER, CENTER);
+        strokeWeight(1);
         textFont(fonts.redressed);
-        fill(textColour);
         text(this.date, 0, 0);
 
         pop();
