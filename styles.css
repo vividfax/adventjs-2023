@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Lora";
+    src: url("./assets/homepage/Lora-VariableFont_wght.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -32,7 +39,7 @@ body {
     float: left;
     color: #fff;
     font-size: 16px;
-    font-family: monospace;
+    font-family: Lora, serif;
     z-index: 1;
 }
 

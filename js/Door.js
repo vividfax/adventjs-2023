@@ -1,6 +1,6 @@
 class Door {
 
-    constructor(x, y, num, date, values) {
+    constructor(x, y, num, date, numberAlign, values) {
 
         this.x = x;
         this.y = y;
@@ -11,6 +11,7 @@ class Door {
         this.palette = values.palette;
 
         this.numberOffset = int(random(4));
+        this.numberOffset = numberAlign;
         this.flashOffset = random(360);
 
         this.xPos = (x-2) * this.values.doorSpacingX;
@@ -220,9 +221,9 @@ class Door {
         push();
 
         if (this.y == 4 && this.x == 2) translate(0, -74*zoom);
-        else if (this.numberOffset == 0) translate(quarter, quarter);
-        else if (this.numberOffset == 1) translate(-quarter, quarter);
-        else if (this.numberOffset == 2) translate(quarter, -quarter);
+        else if (this.numberOffset == 0) translate(quarter, -quarter);
+        else if (this.numberOffset == 1) translate(quarter, quarter);
+        else if (this.numberOffset == 2) translate(-quarter, quarter);
         else if (this.numberOffset == 3) translate(-quarter, -quarter);
 
         if (this.hovering) {

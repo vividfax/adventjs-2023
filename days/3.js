@@ -7,7 +7,7 @@ class Day3 extends Day {
         super();
         this.loop = true; // Set to true or false
 
-        this.controls = "Spacebar: New Globe. Left+Right Arrows: Control the Wind. Enter: Shake!"; // Write any controls for interactivity if needed or leave blank
+        this.controls = "SPACEBAR: New Globe. LEFT+RIGHT ARROWS: Control the Wind. ENTER: Shake!"; // Write any controls for interactivity if needed or leave blank
         this.credits = "Made by Ollie Withington"; // Replace with your name
 
         // Define variables here. Runs once during the sketch holder setup
