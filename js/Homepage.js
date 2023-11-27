@@ -315,10 +315,10 @@ class Homepage {
         }
 
         this.displayFairyLights();
+        this.displayWreath();
 
         pop();
 
-        // today = 24;
         if (this.openAmount > 0) this.display3DWindows(this.openAmount);
     }
 
@@ -331,6 +331,8 @@ class Homepage {
         noStroke();
 
         background(this.palette.gold);
+        this.displaySkyStar(zoom);
+        this.displayReindeer(zoom);
         this.displaySnow();
 
         if (daysToReveal < 9) fill(this.palette.mid);
@@ -361,6 +363,39 @@ class Homepage {
 
         this.displayTrees();
         this.displaySnowman(zoom);
+    }
+
+    displaySkyStar(zoom) {
+
+        if (daysToReveal < 14) return;
+
+        push();
+
+        imageMode(CENTER);
+
+        // let s = sin(frameCount*0.05)*3;
+
+        image(assets.homepageStar, 300*zoom, -283*zoom, 25*zoom, 30*zoom);
+        pop();
+    }
+
+    displayReindeer(zoom) {
+
+        if (daysToReveal < 24) return;
+
+        push();
+
+        imageMode(CENTER);
+        angleMode(DEGREES);
+
+        let offset = 700*zoom;
+
+        translate(0, offset);
+        rotate(90);
+        rotate(-frameCount/3);
+        image(assets.homepageReindeer, 0, -310*zoom - offset, 166*zoom, 42*zoom);
+
+        pop();
     }
 
     displaySnow() {
@@ -503,8 +538,6 @@ class Homepage {
 
     displayFairyLights() {
 
-        // this.zoom = 3;
-
         let zoom = this.zoom;
 
         push();
@@ -544,6 +577,49 @@ class Homepage {
                 count++;
             }
         }
+        pop();
+    }
+
+    displayWreath() {
+
+        if (daysToReveal < 25) return;
+
+        let zoom = this.zoom;
+
+        let startingColours = [this.palette.black, this.palette.mid, this.palette.light];
+        let colours = [];
+
+        for (let i = 0; i < 3; i++) {
+            let col = color(0);
+            col.setRed(red(startingColours[i]));
+            col.setGreen(green(startingColours[i]));
+            col.setBlue(blue(startingColours[i]));
+            if (today+1 == 25) col.setAlpha(this.doorDateAlpha*255);
+            colours.push(col);
+        }
+
+        push();
+        translate(0, 230*zoom);
+
+        noFill();
+        stroke(colours[0]);
+        strokeWeight(13*zoom);
+        ellipse(0, 0, 22*zoom);
+
+        noStroke();
+
+        for (let i = 0; i < 18; i++) {
+
+            push();
+            rotate(360/18*i);
+            let colour = i%3 == 0 ? colours[1] : colours[2];
+            fill(colour);
+            let offset = i%2 == 0 ? 10 : 16;
+            translate(0, offset*zoom);
+            ellipse(0, 0, 4*zoom);
+            pop();
+        }
+
         pop();
     }
 

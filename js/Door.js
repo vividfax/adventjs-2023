@@ -77,6 +77,7 @@ class Door {
             this.clicked = true;
             homepage.enteringDoor = true;
             homepage.currentDoor = this;
+            today = this.date-1;
             if (!this.opened) {
                 this.opened = true;
                 storeItem(this.date.toString(), true);

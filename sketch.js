@@ -26,7 +26,8 @@ function preload() {
     }
 
     fonts.redressed = loadFont("./assets/homepage/Redressed-Regular.ttf");
-    fonts.satisfy = loadFont("./assets/homepage/Satisfy-Regular.ttf");
+    assets.homepageReindeer = loadImage("./assets/homepage/reindeer.png");
+    assets.homepageStar = loadImage("./assets/homepage/star.png");
 }
 
 function setup() {
@@ -59,6 +60,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
+    // daysToReveal = 25;
 
     homepage = new Homepage();
 }
@@ -98,7 +100,6 @@ function getDaysToReveal() {
     timeSinceStart /= 24 * 60 * 60 * 1000;
     timeSinceStart = ceil(timeSinceStart);
 
-    // console.log(timeSinceStart);
     return timeSinceStart;
 }
 
@@ -247,7 +248,7 @@ function mousePressed() {
 function mouseReleased() {
 
     if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
-    days[today].mouseReleased();
+    if (!homepage.visible) days[today].mouseReleased();
 }
 
 function keyPressed() {
