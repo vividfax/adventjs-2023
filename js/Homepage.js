@@ -44,6 +44,7 @@ class Homepage {
         this.cameraX = 0;
         this.cameraY = 0;
         this.zoom = 1;
+        // this.zoom = 0.8; // logo zoom level
         this.minZoom = 1;
         this.maxZoom = width/this.doorSize;
 

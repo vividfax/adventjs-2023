@@ -18,18 +18,6 @@ let fonts = {};
 let seedGenerator;
 let testSeed;
 
-function preload() {
-
-    for (let i = 0; i < 25; i++) {
-        let n = i+1;
-        eval("day"+ n +"Preload()");
-    }
-
-    fonts.redressed = loadFont("./assets/homepage/Redressed-Regular.ttf");
-    assets.homepageReindeer = loadImage("./assets/homepage/reindeer.png");
-    assets.homepageStar = loadImage("./assets/homepage/star.png");
-}
-
 function setup() {
 
     canvas = createCanvas(700, 700);

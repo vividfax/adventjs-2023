@@ -1,10 +1,5 @@
 // Made my Rianna Suen - interactive example
 
-function day2Preload() {
-
-    assets.day2SnowmanFace = loadImage("../assets/day2/snowman-face.png");
-}
-
 class Day2 extends Day {
 
     constructor () {

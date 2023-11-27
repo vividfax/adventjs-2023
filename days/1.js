@@ -1,11 +1,5 @@
 // Made by Mike Cook and Rianna Suen - text-based example (using Tracery)
 
-function day1Preload() {
-
-    assets.day1GrammarSource = loadJSON("../assets/day1/grammar-source.json");
-    assets.day1Font = loadFont("../assets/day1/Pangolin-Regular.ttf");
-}
-
 class Day1 extends Day {
 
     constructor () {
