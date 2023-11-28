@@ -33,9 +33,12 @@ function preload() {
         loadImage('./assets/day2/Tiles/9.png')];
 
     // day4
+    assets.day4Font = loadFont("./assets/day4/Cabin-Regular.ttf");
+
+    // day24
     assets.day0GrammarSource = loadJSON("./assets/day0/grammar-source.json");
     assets.day0Font = loadFont("./assets/day0/Pangolin-Regular.ttf");
 
-    // day5
+    // day25
     assets.day0SnowmanFace = loadImage("./assets/day0/snowman-face.png");
 }

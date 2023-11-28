@@ -41,7 +41,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    daysToReveal = 3;
+    daysToReveal = 4;
 
     homepage = new Homepage();
 }
