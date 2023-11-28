@@ -1,59 +1,127 @@
-// Made by Firstname Lastname (keep this line and replace with your name)
-
-function day24Preload() {
-
-    // Load any assets here (with assets.dayX at the front of the variable name)
-}
+// Made by Mike Cook and Rianna Suen - text-based example (using Tracery)
 
 class Day24 extends Day {
 
     constructor () {
 
         super();
-        this.loop = true; // Set to true or false
+        this.loop = true;
+        this.controls = "CLICK for a new letter to Santa";
+        this.credits = "Made by Mike Cook and Rianna Suen";
+        this.label = "text-based example";
 
-        this.controls = ""; // Write any controls for interactivity if needed or leave blank
-        this.credits = "Made by Firstname Lastname"; // Replace with your name
+        // setup text
 
-        // Define variables here. Runs once during the sketch holder setup
+        this.grammar = setupGrammar(assets.day0GrammarSource);
+        this.randomText;
+
+        // setup snow particles
+
+        this.snow = [];
+        this.snowAmount = 200;
+
+        for (let i = 0; i < this.snowAmount; i++) {
+            this.snow.push(new this.Snow());
+        }
     }
 
     prerun() {
 
-        // Initialise/reset variables here. Runs once, every time your day is viewed
+        this.newText();
     }
 
     update() {
 
-        // Update and draw stuff here. Runs continuously (or only once if this.loop = false), while your day is being viewed
+        background(255);
 
-        background(200); // You can delete this line if you want
+        // draw text
+
+        textSize(45);
+        textFont(assets.day0Font);
+        textAlign(CENTER, CENTER);
+        rectMode(CENTER);
+
+        fill(180);
+        text(this.randomText, width/2-2, height/2-2, width*0.8);
+        fill(200);
+        text(this.randomText, width/2, height/2, width*0.8);
+
+        // draw snow
+
+        for (let i = 0; i < this.snow.length; i++) {
+            this.snow[i].update();
+        }
     }
-
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
 
     mousePressed() {
 
+        this.newText();
     }
 
-    mouseReleased() {
+    newText() {
 
+        // get new text
+
+        this.randomText = getText(this.grammar);
+
+        // reset fallen snow
+
+        for (let i = 0; i < this.snow.length; i++) {
+            this.snow[i].clearFallenSnow();
+        }
     }
 
-    keyPressed() {
-
-    }
-
-    keyReleased() {
-
-    }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    HelperClass = class {
+    Snow = class {
 
         constructor() {
 
+            this.fallenSnow = [];
+            this.init();
+        }
+
+        init() {
+
+            this.x = random(width);
+            this.y = random(height);
+            this.radius = random(3, 10);
+        }
+
+        clearFallenSnow() {
+
+            this.fallenSnow = [];
+        }
+
+        update() {
+
+            if (random() < 0.005) {
+
+                this.fallenSnow.push({
+                    x: this.x,
+                    y: this.y,
+                    radius: this.radius
+                });
+
+                this.init();
+            }
+
+            this.x += random(-1, 2);
+            this.y++;
+
+            this.x = this.x % width;
+            this.y = this.y % height;
+
+            this.display();
+        }
+
+        display() {
+
+            noStroke();
+            fill(255);
+            ellipse(this.x, this.y, this.radius);
+
+            for (let i = 0; i < this.fallenSnow.length; i++) {
+                ellipse(this.fallenSnow[i].x, this.fallenSnow[i].y, this.fallenSnow[i].radius)
+            }
         }
     }
 }
