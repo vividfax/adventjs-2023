@@ -12,6 +12,17 @@ body {
     background-color: #111;
 }
 
+#p5_loading {
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-family: Lora, serif;
+    color: #C9A156;
+}
+
 #container {
     width: 100%;
     margin: auto;
