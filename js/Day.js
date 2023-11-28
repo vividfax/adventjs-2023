@@ -15,6 +15,10 @@ class Day {
 
     }
 
+    cleanup() {
+
+    }
+
     mousePressed() {
 
     }
