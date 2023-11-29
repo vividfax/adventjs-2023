@@ -8,7 +8,7 @@ let daysToReveal;
 let assets = {};
 
 let homepage;
-let body, controlsText, creditsText;
+let body, controlsText, creditsText, backButton;
 let canvas;
 let noLoopCanvas;
 
@@ -30,6 +30,9 @@ function setup() {
     body = select("body");
     controlsText = select("#controls");
     creditsText = select("#credits");
+    backButton = select("#back-button");
+
+    backButton.mousePressed(backButtonPressed);
 
     bodyColours = {
         unhover: color("#111"),
@@ -66,7 +69,7 @@ function draw() {
         resetModes();
     }
 
-    updatePageBackground();
+    // updatePageBackground();
 }
 
 function getDaysToReveal() {
@@ -181,7 +184,18 @@ function updateInfo(day) {
     }
 }
 
+function backButtonPressed() {
+
+    if (!homepage.visible) {
+        homepage.visible = true;
+        homepage.exitingDoor = true;
+        backButton.style("display", "none");
+    }
+}
+
 function updatePageBackground() {
+
+    return;
 
     bodyColours.current = lerpColor(bodyColours.unhover, bodyColours.hover, bodyColours.step/bodyColours.duration);
 
@@ -198,11 +212,11 @@ function mousePressed() {
 
     if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
 
-        if (!homepage.visible) {
-            homepage.visible = true;
-            homepage.exitingDoor = true;
-            bodyColours.step = bodyColours.duration + 20;
-        }
+        // if (!homepage.visible) {
+        //     homepage.visible = true;
+        //     homepage.exitingDoor = true;
+        //     bodyColours.step = bodyColours.duration + 20;
+        // }
         return;
     }
 

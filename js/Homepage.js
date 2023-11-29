@@ -267,6 +267,7 @@ class Homepage {
                 this.openAmount = 1;
                 this.enteringDoor = false;
                 this.visible = false;
+                backButton.style("display", "inline");
             }
         }
     }
