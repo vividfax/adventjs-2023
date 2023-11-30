@@ -5,7 +5,7 @@ function preload() {
     assets.homepageReindeer = loadImage("./assets/homepage/reindeer.png");
     assets.homepageStar = loadImage("./assets/homepage/star.png");
 
-    // day 2
+    // day2
     assets.day2Banners = [loadImage('./assets/day2/Banners/1.png'),
         loadImage('./assets/day2/Banners/2.png'),
         loadImage('./assets/day2/Banners/3.png'),
