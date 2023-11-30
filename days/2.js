@@ -16,9 +16,9 @@ class Day2 extends Day {
         this.threadA();
         this.threadB();
 
-        this.threadWidth = 2.5;
+        this.threadWidth = 4;
         this.threadNoise = 2.5;
-        this.threadCount = 25;
+        this.threadCount = 15;
         this.threadLength = 4;
         this.threadSpacingY = 5.5;
         this.threadSpacingX = 6.5;
