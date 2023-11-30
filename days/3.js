@@ -88,8 +88,8 @@ class Day3 extends Day {
 
         //Snow Logic
         this.snowLocations = []
-        this.snowDensity = 0.4
-        this.snowDensityModifier = 0.05
+        this.snowDensity = 0.3
+        this.snowDensityModifier = 0.04
         this.snowFallingRate = 5
         this.snowNoiseScale = 0.25
         this.swirlScale = 0.05
@@ -248,7 +248,7 @@ class Day3 extends Day {
       this.fallingSnowLogic()
 
       if(this.accumulatingSnow){
-        if(frameCount%10==0){
+        if(frameCount%30==0){
           this.updateSnowPiles()
         }
         this.drawSnowPiles()
@@ -917,7 +917,7 @@ class Day3 extends Day {
       //stroke(255)
       this.layerDynamicScene.circle(this.snowLocations[i][0], this.snowLocations[i][1], random(1,5));
       var belowTerrain = this.snowLocations[i][1]>(height-this.terrainHeight-3)
-      var aboveGlobe = this.snowLocations[i][1]<(0)
+      var aboveGlobe = false;//this.snowLocations[i][1]<(0)
       if(belowTerrain||aboveGlobe){
         //snowLocations.shift()
         this.snowLocations.splice(i, 1)
