@@ -278,7 +278,7 @@ class Homepage {
 
         if (this.openAmount != 0) {
 
-            this.openAmount = lerp(this.openAmount, 0, 0.1);
+            this.openAmount = lerp(this.openAmount, 0, 0.15);
             if (this.openAmount < 0.001) {
                 this.openAmount = 0;
                 this.doorOpen = false;
