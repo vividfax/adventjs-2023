@@ -52,7 +52,7 @@ class Day6 extends Day {
             rect(pos, maxHeight, wid, 700-maxHeight-10);
             line(pos + (wid/2), maxHeight, pos + (wid/2), maxHeight-docht)
 
-            let frameOffset = frameCount; // + pos
+            let frameOffset = frameCount + pos;
             let speedN = 20
             let n1 = noise(frameOffset/50 + pos)
             let n2 = noise(frameOffset/pos/2)
