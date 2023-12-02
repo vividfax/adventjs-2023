@@ -35,6 +35,14 @@ function preload() {
     // day4
     assets.day4Font = loadFont("./assets/day4/Cabin-Regular.ttf");
 
+    // day7
+    assets.day7Font = loadFont("./assets/day7/Austie.ttf");
+    assets.day7myTexture = loadImage("./assets/day7/paper.png");
+    assets.day7santaStamp = loadImage("./assets/day7/stamp2.png");
+    assets.day7stamp = loadImage("./assets/day7/ministamp.png");
+    assets.day7satanStamp = loadImage("./assets/day7/satanstamp.png");
+
+
     // day9
     assets.day9Model = loadJSON("./assets/day9/model.json");
     assets.day9Carols = loadStrings("./assets/day9/carols.txt");
