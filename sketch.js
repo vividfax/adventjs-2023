@@ -20,6 +20,7 @@ let testSeed;
 function setup() {
 
     canvas = createCanvas(700, 700);
+    // canvas = createCanvas(1244, 700); // wide canvas for socials
     canvas.parent("canvas-wrapper");
     noLoopCanvas = createGraphics(width, height);
 
@@ -44,7 +45,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    if (debugOn) daysToReveal = 5;
+    if (debugOn) daysToReveal = 6;
 
     homepage = new Homepage();
 }
