@@ -1,5 +1,9 @@
 let debugOn = true; // make sure this is set to false before uploading
 
+let profilerOn = true;
+let _perfTimer = 0;
+let _frameTimer = 0;
+
 let today = 0;
 
 let days = [];
@@ -55,9 +59,15 @@ function draw() {
     if (!homepage.visible || (homepage.visible && homepage.doorOpen)) {
 
         if (days[today].loop) {
+
+            if(profilerOn){_frameTimer = Date.now();}
+
             push();
             days[today].update();
             pop();
+
+            if(profilerOn){_reportFrame()}
+
             resetModes();
         } else if (homepage.enteringDoor || homepage.exitingDoor) {
             image(noLoopCanvas, 0, 0, width, height);
@@ -141,6 +151,24 @@ function cleanupOnExit() {
     updateInfo(-1);
     cursor();
     pixelDensity(displayDensity());
+}
+
+function _resetTimer(){
+    _perfTimer = Date.now();
+}
+
+function _reportTimerElapsed(){
+    console.log("Elapsed: "+str(Date.now()-_perfTimer));
+}
+
+function _reportFrame(){
+    let _dif = Date.now() - _frameTimer;
+    if(_dif > 33){
+        console.warn("Frame: "+str(_dif)+"ms (under 30fps)");
+    }
+    else{
+        console.log("Frame: "+str(_dif)+"ms");
+    }
 }
 
 function setupGrammar(grammarSource) {
