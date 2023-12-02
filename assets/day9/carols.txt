@@ -1,0 +1,130 @@
+Jingle Bells
+
+Dashing through the snow
+In a one-horse open sleigh
+O'er the fields we go
+Laughing all the way
+Bells on bob tail ring
+Making spirits bright
+What fun it is to ride and sing
+A sleighing song tonight! Oh!
+
+Jingle bells, jingle bells,
+Jingle all the way.
+Oh! what fun it is to ride
+In a one-horse open sleigh. Hey!
+Jingle bells, jingle bells,
+Jingle all the way;
+Oh! what fun it is to ride
+In a one-horse open sleigh.
+###
+Deck the Halls
+
+Deck the halls with boughs of holly,
+Fa, la, la, la, la, la, la, la, la!
+'Tis the season to be jolly,
+Fa, la, la, la, la, la, la, la, la!
+Don we now our gay apparel,
+Fa, la, la, la, la, la, la, la, la!
+Troll the ancient Christmas carol,
+Fa, la, la, la, la, la, la, la, la!
+
+See the blazing yule before us,
+Fa, la, la, la, la, la, la, la, la!
+Strike the harp and join the chorus.
+Fa, la, la, la, la, la, la, la, la!
+Follow me in merry measure,
+Fa, la, la, la, la, la, la, la, la!
+While I tell of Yuletide treasure,
+Fa, la, la, la, la, la, la, la, la!
+
+Fast away the old year passes,
+Fa, la, la, la, la, la, la, la, la!
+Hail the new, ye lads and lasses!
+Fa, la, la, la, la, la, la, la, la!
+Sing we joyous all together,
+Fa, la, la, la, la, la, la, la, la!
+Heedless of the wind and weather,
+Fa, la, la, la, la, la, la, la, la!
+###
+O Christmas Tree
+
+O Christmas Tree, O Christmas tree,
+How lovely are your branches!
+O Christmas Tree, O Christmas tree,
+How lovely are your branches!
+Not only green in summer’s heat,
+But also winter’s snow and sleet.
+O Christmas tree, O Christmas tree,
+How lovely are your branches!
+
+O Christmas Tree, O Christmas tree,
+Of all the trees most lovely;
+O Christmas Tree, O Christmas tree,
+Of all the trees most lovely.
+Each year you bring to us delight
+With brightly shining Christmas light!
+O Christmas Tree, O Christmas tree,
+Of all the trees most lovely.
+
+O Christmas Tree, O Christmas tree,
+We learn from all your beauty;
+O Christmas Tree, O Christmas tree,
+We learn from all your beauty.
+Your bright green leaves with festive cheer,
+Give hope and strength throughout the year.
+O Christmas Tree, O Christmas tree,
+We learn from all your beauty.
+###
+Santa Claus Is Coming to Town
+
+You better watch out
+You better not cry
+You better not pout
+I'm telling you why
+Santa Claus is coming to town
+He's making a list
+He's checking it twice
+He's going to find out
+Who's naughty and nice
+Santa Claus is coming to town
+
+He sees you when you're sleeping
+He knows when you're awake
+He knows when you've been bad or good
+So be good for goodness sake
+###
+Have Yourself a Merry Little Christmas
+
+Have yourself a merry little Christmas
+Let your heart be light
+Next year all our troubles will be out of sight
+
+Have yourself a merry little Christmas
+Make the Yuletide gay
+Next year all our troubles will be miles away
+
+Once again, as in olden days
+Happy golden days of yore
+Faithful friends who are dear to us
+Will be near to us once more
+
+Someday soon we all will be together
+If the fates allow
+Until then, we'll have to muddle through somehow
+So have yourself a merry little Christmas now
+###
+merry christmas and happy holidays
+from the ghost of english past
+
+algo details:
+we use the blabrecs nonsense-word-plausibility model
+to determine what single-character edit
+will most increase the plausibility score of the current text,
+then repeat this process
+until it reaches a fixed point
+
+for more on blabrecs:
+https://mkremins.github.io/blabrecs
+
+made with <3 by max kreminski

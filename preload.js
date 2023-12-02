@@ -35,6 +35,11 @@ function preload() {
     // day4
     assets.day4Font = loadFont("./assets/day4/Cabin-Regular.ttf");
 
+    // day9
+    assets.day9Model = loadJSON("./assets/day9/model.json");
+    assets.day9Carols = loadStrings("./assets/day9/carols.txt");
+
+
     // day24
     assets.day0GrammarSource = loadJSON("./assets/day0/grammar-source.json");
     assets.day0Font = loadFont("./assets/day0/Pangolin-Regular.ttf");
