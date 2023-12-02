@@ -89,7 +89,9 @@ function createDays() {
 
     for (let i = 0; i < 25; i++) {
         let n = i+1;
+        push();
         eval("days.push(new Day"+ n +"())");
+        pop();
     }
 }
 
@@ -101,11 +103,12 @@ function changeDay(date) {
 
     clear();
 
+    resetModes();
+    resetSeeds();
+
     push();
     days[today].prerun();
     pop();
-    resetModes();
-    resetSeeds();
 
     if (!days[today].loop) {
         push();
@@ -222,19 +225,30 @@ function mousePressed() {
     }
 
     if (homepage.visible) homepage.checkDoorClick();
-    else days[today].mousePressed();
+    else {
+        push();
+        days[today].mousePressed();
+        pop();
+    }
 }
 
 function mouseReleased() {
 
     if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
-    if (!homepage.visible) days[today].mouseReleased();
+    if (!homepage.visible) {
+        push();
+        days[today].mouseReleased();
+        pop();
+    }
 }
 
 function keyPressed() {
 
-    if (!homepage.visible || (homepage.visible && homepage.doorOpen)) days[today].keyPressed();
-    else if (debugOn) {
+    if (!homepage.visible || (homepage.visible && homepage.doorOpen)) {
+        push();
+        days[today].keyPressed();
+        pop();
+    } else if (debugOn) {
         if (keyCode == 187) { // debug delete later
             daysToReveal++;
             console.log(daysToReveal);
@@ -253,5 +267,9 @@ function keyPressed() {
 
 function keyReleased() {
 
-    if (!homepage.visible || (homepage.visible && homepage.doorOpen)) days[today].keyReleased();
+    if (!homepage.visible || (homepage.visible && homepage.doorOpen)) {
+        push();
+        days[today].keyReleased();
+        pop();
+    }
 }

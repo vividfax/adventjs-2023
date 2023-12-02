@@ -35,6 +35,7 @@ class Day6 extends Day {
         // currentday = 24;
 
         strokeWeight(10);
+        stroke(0);
 
         function candle(pos, startday){
 

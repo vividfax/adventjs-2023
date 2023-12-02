@@ -11,10 +11,6 @@ class Day2 extends Day {
         this.credits = "Made by Chris Allen"; // Replace with your name
 
         // Define variables here. Runs once during the sketch holder setup
-        this.makePattern();
-        this.knitPattern();
-        this.threadA();
-        this.threadB();
 
         this.threadWidth = 4;
         this.threadNoise = 2.5;
@@ -33,6 +29,8 @@ class Day2 extends Day {
         this.backgroundThreadColor = random(['rgba(74,149,77,0.5)','rgba(149,74,77,0.5)','rgba(129,74,147,0.5)']);
 
         pixelDensity (1);
+
+        push();
         this.makePattern ();
         loadPixels();
 
@@ -41,6 +39,7 @@ class Day2 extends Day {
         background(30);
 
         this.knitPattern();
+        pop();
     }
 
     makePattern() {
