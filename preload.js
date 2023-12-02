@@ -42,11 +42,14 @@ function preload() {
     assets.day7stamp = loadImage("./assets/day7/ministamp.png");
     assets.day7satanStamp = loadImage("./assets/day7/satanstamp.png");
 
-
     // day9
     assets.day9Model = loadJSON("./assets/day9/model.json");
     assets.day9Carols = loadStrings("./assets/day9/carols.txt");
 
+    // day21
+    assets.day21Shader = loadShader('./assets/day21/shader.vert', './assets/day21/shader.frag');
+
+    // examples
 
     // day24
     assets.day0GrammarSource = loadJSON("./assets/day0/grammar-source.json");
