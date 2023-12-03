@@ -1,136 +1,162 @@
-// Made by bleeptrack
+// Made by Mariana Marangoni (keep this line and replace with your name)
 
 class Day6 extends Day {
 
-    constructor () {
+    constructor() {
 
         super();
         this.loop = true; // Set to true or false
 
-        this.controls = "Candles burn down over time until Christmas. Hope you come back and see each advent candle light up :)"; // Write any controls for interactivity if needed or leave blank
-        this.credits = "Made by bleeptrack"; // Replace with your name
+        this.controls = "Press SPACEBAR to (re)generate a letter"; // Write any controls for interactivity if needed or leave blank
+        this.credits = "Made by Mariana Marangoni"; // Replace with your name
 
         // Define variables here. Runs once during the sketch holder setup
+
+        this.threeD = createGraphics(width, height, WEBGL);
+        this.letter = createGraphics(400, 400);
+
+        this.generatedLetter0;
+        this.generatedLetter1;
+        this.generatedLetter2;
+        this.generatedLetter3;
+
+        this.myGeometry;
+
+        this.greetSentences = [
+            "Dear Santa,",
+            "Dear Satan,",
+            "Dear Santa,",
+            "Dear Santa,",
+            "Dear Santa,",
+            "Dear Santa,",
+            "Dear Santa,",
+            "Dear Santa,"
+        ];
+        this.introSentences = [
+            "I hope this letter finds you well.",
+            "How are you doing?",
+            "How are the reindeer doing?",
+            "Are you real?? I think you are!",
+            "I can't believe it's almost Christmas!",
+            "I'll leave cookies and milk for you.",
+            "Please say hi to Rudolph for me!"
+        ];
+        this.wishSentences = [
+            "I wish for a robot with laser eyes!",
+            "My biggest dream is to have a puppy.",
+            "Could you please bring me a book about space pirates?",
+            "Can I have a fluffy teddy bear to keep me company at night?"
+        ];
+        this.nameOptions = [
+            "Tommy",
+            "Samantha",
+            "Alex",
+            "Emily",
+            "Charlie",
+            "Mary",
+            "Stella",
+            "Lucy",
+            "Melissa",
+            "Jimmy",
+            "Mark"
+        ];
     }
 
     prerun() {
-
         // Initialise/reset variables here. Runs once, every time your day is viewed
+
+        this.threeD.textureMode(NORMAL);
+
+        let detailX = 20;
+        let detailY = 20;
+        this.myGeometry = new p5.Geometry(detailX, detailY, function () {
+            for (let x = 0; x <= detailX; x++) {
+                for (let y = 0; y <= detailY; y++) {
+                this.vertices.push(
+                    new p5.Vector(
+                    x / detailX,
+                    y / detailY,
+                    (sin((x / detailX) * PI) + cos((y / detailY) * PI)) / 10
+                    )
+                );
+                this.uvs.push([x / detailX, y / detailY]);
+                }
+            }
+
+            this.computeFaces();
+            this.computeNormals();
+        });
+        this.myGeometry.texture = assets.day6myTexture;
+
+        this.newLetter();
+
+        // describe("a kid letter to Santa");
+    }
+
+    newLetter() {
+
+        this.generateLetter();
+
+        // Set texture to the geometry
+        this.letter.textFont(assets.day6Font);
+        this.letter.textLeading(40);
+        this.letter.textSize(42);
+        this.letter.background(assets.day6myTexture);
+        this.letter.image(assets.day6santaStamp, 180, 10);
+        this.letter.image(assets.day6stamp, 220, 30);
+        this.letter.fill(50);
+        this.letter.text(this.generatedLetter0, 20, 120, 380);
+        this.letter.text(this.generatedLetter1, 20, 160, 380);
+        this.letter.text(this.generatedLetter2, 20, 200, 380);
+        this.letter.text(this.generatedLetter3, 20, 300, 380);
+        if (this.generatedLetter0 == "Dear Satan,") {
+            this.letter.image(assets.day6satanStamp, 180, 10);
+        }
+
+        this.threeD.background(170, 50, 50);
+        this.threeD.noStroke();
+        this.threeD.push();
+        // this.threeD.orbitControl();
+        let paperSize = width / 1.5;
+        // rotateY((cos(millis() / 10000) * PI) / 8);
+        this.threeD.translate(-paperSize / 2, -paperSize / 2);
+        this.threeD.scale(paperSize);
+        this.threeD.texture(this.letter);
+        this.threeD.beginShape(TRIANGLES);
+        for (let i = 0; i < this.myGeometry.faces.length; i++) {
+            let face = this.myGeometry.faces[i];
+            for (let j = 0; j < face.length; j++) {
+                let vert = this.myGeometry.vertices[face[j]];
+                let uv = this.myGeometry.uvs[face[j]];
+                this.threeD.vertex(vert.x, vert.y, vert.z, uv[0], uv[1]);
+            }
+        }
+        this.threeD.endShape(CLOSE);
+        this.threeD.pop();
+    }
+
+    generateLetter() {
+
+        let greet = random(this.greetSentences);
+        let intro = random(this.introSentences);
+        let wish = random(this.wishSentences);
+        let name = random(this.nameOptions);
+        this.generatedLetter0 = `${greet}`;
+        this.generatedLetter1 = `${intro}`;
+        this.generatedLetter2 = `${wish} `;
+        this.generatedLetter3 = `Sincerely, \n${name}`;
     }
 
     update() {
 
-        // Update and draw stuff here. Runs continuously (or only once if this.loop = false), while your day is being viewed
-
-        colorMode(HSB);
-        background(231, 73, 100-Math.abs( (12-hour()) * 4));
-        colorMode(RGB);
-
-
-        let wid = 130
-        let docht = 60
-        let flameR = 30
-        let shineR = 350
-        let currentday = day() > 24 ? 24 : day()
-        // currentday = 24;
-
-        strokeWeight(10);
-        stroke(0);
-
-        function candle(pos, startday){
-
-
-            let timediff = 0
-            if(currentday >= startday){
-            timediff = (currentday-startday) * 24 + hour()
-            }
-
-            let maxHeight = 700 * 1/3 + timediff*0.8
-            let flameX = pos + (wid/2)
-            let flameY = maxHeight-docht
-
-            fill(148, 43, 37)
-            rect(pos, maxHeight, wid, 700-maxHeight-10);
-            line(pos + (wid/2), maxHeight, pos + (wid/2), maxHeight-docht)
-
-            let frameOffset = frameCount + pos;
-            let speedN = 20
-            let n1 = noise(frameOffset/50 + pos)
-            let n2 = noise(frameOffset/pos/2)
-            let offsetSin = 15 * sin(frameOffset/speedN) * n1 + 15
-            let offsetCos = 15 * cos(frameOffset/speedN/2) * n2 + 15
-
-            if(currentday >= startday){
-            fill(255, 204, 0);
-            beginShape();
-            vertex(flameX - flameR, flameY)
-            bezierVertex(flameX - flameR,flameY + flameR, flameX, flameY + flameR, flameX, flameY + flameR)
-            bezierVertex(flameX, flameY + flameR, flameX + flameR, flameY + flameR,flameX + flameR,flameY)
-            bezierVertex( flameX + flameR,flameY-(docht/3),flameX+offsetCos, flameY - docht + offsetSin, flameX, flameY - docht)
-            bezierVertex( flameX-offsetSin, flameY - docht + offsetCos, flameX - flameR,flameY-(docht/3), flameX - flameR, flameY)
-            endShape(CLOSE);
-            }
-
-        }
-
-        function shines(pos, startday, hasfill){
-
-            if(hasfill){
-            fill(255, 251, 201, 140);
-            }else{
-            noFill()
-            }
-
-            let timediff = 0
-            if(currentday >= startday){
-            timediff = (currentday-startday) * 24 + hour()
-            }
-
-            let maxHeight = 700 * 1/3 + timediff*0.8
-            let flameX = pos + (wid/2)
-            let flameY = maxHeight-docht
-            let n = noise(frameCount/300 + pos)
-
-            if(currentday >= startday){
-            circle(flameX, flameY, shineR + n*50)
-            }
-        }
-
-        for(let i = 0; i<4; i++){
-            shines(50 + 150*i, 3+i*7, true)
-        }
-        for(let i = 0; i<4; i++){
-            shines(50 + 150*i, 3+i*7, false)
-        }
-        for(let i = 0; i<4; i++){
-            candle(50 + 150*i, 3+i*7)
-        }
-    }
-
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
-
-    mousePressed() {
-
-    }
-
-    mouseReleased() {
-
+        image(this.threeD, 0, 0);
     }
 
     keyPressed() {
-
-    }
-
-    keyReleased() {
-
-    }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    HelperClass = class {
-
-        constructor() {
-
+        if (keyCode === 32) {
+            this.newLetter()
+        } else if (keyCode === 83) { // s
+            save("letter.png");
         }
     }
 }

@@ -35,19 +35,19 @@ function preload() {
     // day4
     assets.day4Font = loadFont("./assets/day4/Cabin-Regular.ttf");
 
-    // day7
-    assets.day7Font = loadFont("./assets/day7/Austie.ttf");
-    assets.day7myTexture = loadImage("./assets/day7/paper.png");
-    assets.day7santaStamp = loadImage("./assets/day7/stamp2.png");
-    assets.day7stamp = loadImage("./assets/day7/ministamp.png");
-    assets.day7satanStamp = loadImage("./assets/day7/satanstamp.png");
+    // day6
+    assets.day6Font = loadFont("./assets/day6/Austie.ttf");
+    assets.day6myTexture = loadImage("./assets/day6/paper.png");
+    assets.day6santaStamp = loadImage("./assets/day6/stamp2.png");
+    assets.day6stamp = loadImage("./assets/day6/ministamp.png");
+    assets.day6satanStamp = loadImage("./assets/day6/satanstamp.png");
+
+    // day8
+    assets.day8Shader = loadShader('./assets/day8/shader.vert', './assets/day8/shader.frag');
 
     // day9
     assets.day9Model = loadJSON("./assets/day9/model.json");
     assets.day9Carols = loadStrings("./assets/day9/carols.txt");
-
-    // day21
-    assets.day21Shader = loadShader('./assets/day21/shader.vert', './assets/day21/shader.frag');
 
     // examples
 
