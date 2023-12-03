@@ -122,6 +122,7 @@ class Day2 extends Day {
     // Below are optional functions for interactivity. They can be deleted from this file if you want
     mousePressed() {
         this.update();
+        noLoopCanvas.image(canvas, 0, 0, width, height);
     }
 
     mouseReleased() {

@@ -1,6 +1,6 @@
 let debugOn = true; // make sure this is set to false before uploading
 
-let profilerOn = true;
+let profilerOn = false; // make sure this is set to false before uploading
 let _perfTimer = 0;
 let _frameTimer = 0;
 
