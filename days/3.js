@@ -148,9 +148,8 @@ class Day3 extends Day {
 
         this.mainSeed = null;
         this.userSeed = "";
-
-        this.initialiseGlobeHighlightImg()
     }
+
     initialise(){
 
       //Remove all data in case we are regenerating a new city
@@ -221,8 +220,9 @@ class Day3 extends Day {
     }
 
     prerun() {
-        this.initialise()
 
+        this.initialiseGlobeHighlightImg()
+        this.initialise()
     }
 
     update() {
@@ -340,6 +340,9 @@ class Day3 extends Day {
 
   //Dedicated layer for a highlight to (hopefully) give the snow globe a 3D effect
    initialiseGlobeHighlightImg(){
+
+    this.layerGlobeHighlight.clear();
+
     this.layerGlobeHighlight.fill([255,255,255,35])
     this.layerGlobeHighlight.noStroke()
     this.layerGlobeHighlight.circle((width/2),(height/2)-20,550)

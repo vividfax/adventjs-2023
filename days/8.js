@@ -21,7 +21,7 @@ class Day8 extends Day {
         this.greens = new Array(arrayLength);
         this.blues = new Array(arrayLength);
         this.points = new Array(arrayLength);
-        this.initialiseLists();
+        // this.initialiseLists();
 
         // Define variables here. Runs once during the sketch holder setup
     }
