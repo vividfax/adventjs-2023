@@ -30,14 +30,16 @@ class Homepage {
             16, 3, 22, 8, 19,
             21, 7, 2, 13, 23,
             24, 6, 17, 11, 14,
-            10, 18, 25, 1, 5
+            10, 18, 25, 1, 5,
+            29, 28, 30, 26, 27,
         ];
         this.doorNumberAlign = [
             1, 3, 1, 3, 1,
             0, 2, 1, 0, 2,
             3, 2, 3, 3, 2,
             0, 1, 0, 2, 0,
-            2, 3, 0, 0, 3
+            2, 3, 0, 0, 3,
+            0, 0, 0, 0, 0,
         ];
         this.doors = [];
 
@@ -70,6 +72,8 @@ class Homepage {
         this.threeD = createGraphics(width, height, WEBGL);
         this.twoDWindow = this.create2DWindow();
         this.twoDFrontDoor = this.create2DFrontDoor();
+        this.twoDPresents = [];
+        for (let i = 0; i < 5; i++) this.twoDPresents.push(this.create2DPresent(i));
         this.treeMask = this.createTreeMask();
         this.treeTinselA = this.createTreeTinsel();
         this.treeTinselB = this.createTreeTinsel();
@@ -119,6 +123,29 @@ class Homepage {
         twoD.stroke(this.palette.black);
         twoD.line(width, 0, width, h);
         twoD.line(width-7*this.maxZoom, h/2-4.5*this.maxZoom, width-7*this.maxZoom, h/2+4.5*this.maxZoom);
+
+        return twoD;
+    }
+
+    create2DPresent(i) {
+
+        let palette;
+
+        if (i == 3) palette = [this.palette.dark, this.palette.light];
+        else if (i == 2) palette = [this.palette.gold, this.palette.black];
+        else if (i == 4) palette = [this.palette.mid, this.palette.black];
+        else if (i == 0) palette = [this.palette.dark, this.palette.gold];
+        else if (i == 1) palette = [this.palette.gold, this.palette.light];
+
+        let h = height*2;
+        let twoD = createGraphics(width, h);
+        let weight = 6*17.5;
+
+        twoD.noStroke();
+        twoD.background(palette[0]);
+        twoD.strokeWeight(weight);
+        twoD.stroke(palette[1]);
+        twoD.line(width, 0, width, h);
 
         return twoD;
     }
@@ -641,7 +668,9 @@ class Homepage {
 
     display3DWindows(openAmount) {
 
-        let source = today+1 == 25 ? this.twoDFrontDoor : this.twoDWindow;
+        let source = this.twoDWindow;
+        if (today+1 > 25) source = this.twoDPresents[today-25];
+        else if (today+1 == 25) source = this.twoDFrontDoor;
 
         angleMode(DEGREES);
         imageMode(CENTER);

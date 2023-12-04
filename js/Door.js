@@ -8,6 +8,7 @@ class Door {
         this.date = date;
 
         this.values = values;
+        this.doorSize = values.doorSize;
         this.palette = values.palette;
 
         this.numberOffset = int(random(4));
@@ -19,17 +20,49 @@ class Door {
         if (y == 4) this.yPos += 19;
         if (y == 4 && x == 2) this.yPos += 14+8.5;
 
+        if (y == 5) {
+            this.yPos -= 15;
+            if (x == 0) {
+                this.xPos += 3;
+                this.yPos += 3;
+                this.presentColours = [this.palette.dark, this.palette.light];
+            } else if (x == 1) {
+                this.xPos += 10;
+                this.yPos -= 5;
+                this.presentColours = [this.palette.gold, this.palette.black];
+            } else if (x == 2) {
+                this.xPos += 95;
+                this.yPos -= 7;
+                this.presentColours = [this.palette.mid, this.palette.black];
+            } else if (x == 3) {
+                this.xPos += 45;
+                this.yPos += 3;
+                this.presentColours = [this.palette.dark, this.palette.gold];
+            } else if (x == 4) {
+                this.xPos -= 3;
+                this.yPos -= 5;
+                this.presentColours = [this.palette.gold, this.palette.light];
+            }
+            this.present = true;
+            this.doorZoom = 17.5;
+            this.doorSize = 40;
+        } else {
+            this.present = false;
+            this.doorZoom = 10;
+        }
+
         this.hovering = false;
         this.clicked = false;
         this.opened = getItem(date);
 
-        this.ready = this.date <= daysToReveal;
+        this.readyDate = this.date > 25 ? 25 : this.date;
+        this.ready = this.readyDate <= daysToReveal;
         // this.ready = true; // delete this later
     }
 
     update() {
 
-        this.ready = this.date <= daysToReveal; // debug
+        this.ready = this.readyDate <= daysToReveal; // debug
 
         if (!this.ready) return;
 
@@ -42,21 +75,13 @@ class Door {
 
         let xPos = this.xPos;
         let yPos = this.yPos;
-        let w = this.values.doorSize/2;
-        let h = this.values.doorSize/2;
+        let w = this.doorSize/2;
+        let h = this.doorSize/2;
         if (this.y == 4 && this.x == 2) {
             yPos -= 8;
             w += 5;
             h += 12;
         }
-
-        // debugCanvas.push();
-        // debugCanvas.translate(width/2, height/2);
-        // debugCanvas.rectMode(CORNERS);
-        // debugCanvas.fill(0, 20);
-        // debugCanvas.rect(xPos-w, yPos-h, xPos+w, yPos+h);
-        // debugCanvas.ellipse(xPos, yPos-h, w*2);
-        // debugCanvas.pop();
 
         if ((mouseX-width/2 > xPos-w && mouseX-width/2 < xPos+w) && (mouseY-height/2 > yPos-h && mouseY-height/2 < yPos+h)) this.hovering = true;
 
@@ -78,6 +103,7 @@ class Door {
             this.clicked = true;
             homepage.enteringDoor = true;
             homepage.currentDoor = this;
+            homepage.maxZoom = this.doorZoom;
             today = this.date-1;
             if (!this.opened) {
                 this.opened = true;
@@ -94,40 +120,93 @@ class Door {
 
         translate(this.xPos*homepage.zoom, this.yPos*homepage.zoom);
 
-        let lightColour = this.palette.black;
+        if (this.present) {
 
-        if (!this.opened && this.ready) {
-            let amount = sin((frameCount+this.flashOffset)*5);
-            amount = map(amount, -1, 1, 0, 1);
-            lightColour = lerpColor(color("#FFFFFF"), color("#FFE2AD"), amount);
-        }
-        else if (this.ready) lightColour = this.palette.light;
-
-        this.displayDetail(lightColour);
-
-        rectMode(CORNERS);
-        noStroke();
-
-        if (this.y == 4 && this.x == 2) {
-
-            this.displayFrontDoor(lightColour);
+            this.displayPresent();
 
         } else {
 
-            let quarter = this.values.doorSize*homepage.zoom/2;
-            let weight = homepage.windowFrameStrokeWeight*homepage.zoom;
-            let quarterish = quarter-weight/2;
-            strokeWeight(weight);
-            stroke(this.palette.gold);
-            fill(lightColour);
-            rect(-quarterish, -quarterish, quarterish, quarterish);
-            line(-quarterish, 0, quarterish, 0);
-            line(0, -quarterish, 0, quarterish);
+            let lightColour = this.palette.black;
+
+            if (!this.opened && this.ready) {
+                let amount = sin((frameCount+this.flashOffset)*5);
+                amount = map(amount, -1, 1, 0, 1);
+                lightColour = lerpColor(color("#FFFFFF"), color("#FFE2AD"), amount);
+            }
+            else if (this.ready) lightColour = this.palette.light;
+
+            this.displayDetail(lightColour);
+
+            rectMode(CORNERS);
             noStroke();
+
+            if (this.y == 4 && this.x == 2) {
+
+                this.displayFrontDoor(lightColour);
+
+            } else {
+
+                let quarter = this.values.doorSize*homepage.zoom/2;
+                let weight = homepage.windowFrameStrokeWeight*homepage.zoom;
+                let quarterish = quarter-weight/2;
+                strokeWeight(weight);
+                stroke(this.palette.gold);
+                fill(lightColour);
+                rect(-quarterish, -quarterish, quarterish, quarterish);
+                line(-quarterish, 0, quarterish, 0);
+                line(0, -quarterish, 0, quarterish);
+                noStroke();
+            }
+
+            this.displayNumber();
         }
 
-        this.displayNumber();
+        pop();
+    }
 
+    displayPresent() {
+
+        if (!this.ready) return;
+
+        let zoom = homepage.zoom;
+
+        let glowColour = this.presentColours[0];
+
+        if (!this.opened) {
+            let sourceColour = this.presentColours[0];
+            let colour = color(0);
+            colour.setRed(red(sourceColour));
+            colour.setGreen(green(sourceColour));
+            colour.setBlue(blue(sourceColour));
+            let amount = sin((frameCount+this.flashOffset)*5);
+            amount = map(amount, -1, 1, 0.7, 1);
+            colour.setAlpha(amount*255);
+            glowColour = colour;
+        }
+
+        push();
+        angleMode(DEGREES);
+        if (this.hovering) rotate(sin(frameCount*6)*5);
+        rectMode(CENTER);
+        stroke(this.presentColours[1]);
+        strokeWeight(3*zoom);
+        noFill();
+
+        for (let i = -1; i <= 1; i+=2) {
+            push();
+            translate(-7*i*zoom, -23*zoom);
+            rotate(15*i);
+            ellipse(0, 0, 14*zoom, 5*zoom);
+            pop();
+        }
+
+        noStroke();
+        fill(255);
+        rect(0, 0, 40*zoom);
+        fill(glowColour);
+        rect(0, 0, 40*zoom);
+        fill(this.presentColours[1]);
+        rect(0, 0, 6*zoom, 40*zoom);
         pop();
     }
 
@@ -221,7 +300,6 @@ class Door {
             colour.setAlpha(homepage.doorDateAlpha*255);
             textColours.push(colour);
         }
-
 
         let zoom = homepage.zoom;
         let quarter = this.values.doorSize*zoom/4 - 1.5;

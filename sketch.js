@@ -49,7 +49,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    if (debugOn) daysToReveal = 9;
+    if (debugOn) daysToReveal = 25;
 
     homepage = new Homepage();
 }
@@ -97,7 +97,7 @@ function getDaysToReveal() {
 
 function createDays() {
 
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
         let n = i+1;
         push();
         eval("days.push(new Day"+ n +"())");
