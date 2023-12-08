@@ -49,7 +49,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    if (debugOn) daysToReveal = 25;
+    if (debugOn) daysToReveal = 12;
 
     homepage = new Homepage();
 }
@@ -130,6 +130,8 @@ function changeDay(date) {
 
 function resetModes() {
 
+    colorMode(HSB, 360, 100, 100);
+    colorMode(HSL, 360, 100, 100);
     colorMode(RGB, 255);
     ellipseMode(CENTER);
     rectMode(CORNER);
@@ -148,6 +150,7 @@ function resetSeeds(){
 
 function cleanupOnExit() {
 
+    days[today].cleanup();
     updateInfo(-1);
     cursor();
     pixelDensity(displayDensity());

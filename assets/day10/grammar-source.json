@@ -1,0 +1,29 @@
+{
+    "origin": "#name# #modifier#",
+
+    "name": ["#phoneme.capitalize##phoneme##ending#", 
+             "#phoneme.capitalize##phoneme##phoneme##phoneme##ending#"],
+
+    "modifier": ["", "Major", "Minor"],
+
+    "phoneme": [
+        "a", "i", "u", "e", "o",
+        "au", "ia", "ea", "oi", "io",
+        "cha", "che", "cho", "chu",
+        "sha", "she", "sho", "shu",
+        "pa", "pi", "pu", "pe", "po",
+        "la", "li", "lu", "le", "lo",
+        "da", "di", "du", "de", "do",
+        "ka", "ki", "ku", "ke", "ko",
+        "sa", "shi", "su", "se", "so",
+        "ta", "chi", "tsu", "te", "to",
+        "na", "ni", "nu", "ne", "no",
+        "ha", "hi", "fu", "he", "ho",
+        "ma", "mi", "mu", "me", "mo",
+        "ya", "yu", "yo",
+        "ra", "ri", "ru", "re", "ro",
+        "wa"
+      ],
+
+    "ending": ["us", "um", "a", "ia", "ium", "ius"]
+}
