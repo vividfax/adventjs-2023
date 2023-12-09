@@ -61,6 +61,9 @@ function preload() {
     // day12
     assets.day12 = new Day12Assets();
 
+    // day13
+    assets.day13GrammarSource = loadJSON("./assets/day13/sentence.json");
+
     // examples
 
     // day24

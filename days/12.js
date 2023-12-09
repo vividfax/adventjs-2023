@@ -1,4 +1,4 @@
-// Made by Sam G
+// Made by Sam Geen
 
 class Day12 extends Day {
 
@@ -8,7 +8,7 @@ class Day12 extends Day {
         this.loop = true; // Set to true or false
 
         this.controls = ""; // Write any controls for interactivity if needed or leave blank
-        this.credits = "Made by &#127750; Sam &#129433;"; // Replace with your name
+        this.credits = "Made by Sam Geen"; // Replace with your name
 
         // Define variables here. Runs once during the sketch holder setup
         this.assets = assets.day12;

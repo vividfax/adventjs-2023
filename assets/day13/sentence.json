@@ -1,0 +1,6 @@
+{ 
+"origin": ["This year you have been #nice#. Santa is bringing you #descrip# #present#"], 
+"nice": ["especially nice","noticeably nice","specifically nice","very nice","quite nice","really just so nice","terrifically nice","noticeably nice","wondrously nice","distinctly nice"], 
+"descrip": ["a glittery","a fantastic","an awesome","a noisy","a magical","an electric","a singing","a gigantic","an eye-catching","a striking","a soothing","a festive","an extraordinary"], 
+"present": ["robot!","Game Boy!","board game!","kitten!","outfit!","hoverboard!","saxophone!","dinosaur!","sticker collection!","library!","cowboy hat!","hot tub!","bonsai tree!","rowboat!","parrot!","crystal ball!","trampoline!","aquarium!","terrarium!"]
+}
