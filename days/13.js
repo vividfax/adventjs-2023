@@ -58,24 +58,24 @@ class Day13 extends Day {
         rect(width / 2 - 80, height / 2 - 200, 170, 80, 20, 20, 0, 0);
         fill(255)
         ellipse(width / 2 - this.bauble, height / 2 - 200, 40, 40);
-        ellipse(width / 2 - 10, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 20, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 30, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 40, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 50, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 60, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 70, height / 2 - 130, 20, 20);
-        ellipse(width / 2 - 80, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 0, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 10, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 20, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 30, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 40, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 50, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 60, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 70, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 80, height / 2 - 130, 20, 20);
-        ellipse(width / 2 + 90, height / 2 - 130, 20, 20);
+        ellipse(width / 2 - 10, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 20, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 30, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 40, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 50, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 60, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 70, height / 2 - 125, 20, 20);
+        ellipse(width / 2 - 80, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 0, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 10, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 20, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 30, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 40, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 50, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 60, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 70, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 80, height / 2 - 125, 20, 20);
+        ellipse(width / 2 + 90, height / 2 - 125, 20, 20);
 
         // Santa's jaaaaacket??? How? is it circles? I only know how to do circles!
 
@@ -94,19 +94,19 @@ class Day13 extends Day {
         ellipse(width / 2 + 5, height / 1 - 130, 20, 20);
         ellipse(width / 2 + 5, height / 1 - 90, 20, 20);
         ellipse(width / 2 + 5, height / 1 - 175, 20, 20);
-        ellipse(width / 2 + 155, height / 1 - 200, 20, 20);
-        ellipse(width / 2 + 145, height / 1 - 200, 20, 20);
-        ellipse(width / 2 + 135, height / 1 - 200, 20, 20);
-        ellipse(width / 2 + 125, height / 1 - 200, 20, 20);
-        ellipse(width / 2 + 115, height / 1 - 200, 20, 20);
-        ellipse(width / 2 + 105, height / 1 - 200, 20, 20);
+        ellipse(width / 2 + 155, height / 1 - 197, 20, 20);
+        ellipse(width / 2 + 145, height / 1 - 197, 20, 20);
+        ellipse(width / 2 + 135, height / 1 - 197, 20, 20);
+        ellipse(width / 2 + 125, height / 1 - 197, 20, 20);
+        ellipse(width / 2 + 115, height / 1 - 197, 20, 20);
+        ellipse(width / 2 + 105, height / 1 - 197, 20, 20);
 
-        ellipse(width / 2 - 155, height / 1 - 200, 20, 20);
-        ellipse(width / 2 - 145, height / 1 - 200, 20, 20);
-        ellipse(width / 2 - 135, height / 1 - 200, 20, 20);
-        ellipse(width / 2 - 125, height / 1 - 200, 20, 20);
-        ellipse(width / 2 - 115, height / 1 - 200, 20, 20);
-        ellipse(width / 2 - 105, height / 1 - 200, 20, 20);
+        ellipse(width / 2 - 155, height / 1 - 197, 20, 20);
+        ellipse(width / 2 - 145, height / 1 - 197, 20, 20);
+        ellipse(width / 2 - 135, height / 1 - 197, 20, 20);
+        ellipse(width / 2 - 125, height / 1 - 197, 20, 20);
+        ellipse(width / 2 - 115, height / 1 - 197, 20, 20);
+        ellipse(width / 2 - 105, height / 1 - 197, 20, 20);
 
 
         // Santa's eyes
