@@ -401,6 +401,7 @@ class Day10 extends Day {
 
     generateLandscape() {
         noiseSeed(millis());
+        this.landscape.clear();
 
         this.landscape.noStroke();
         let start = random(-25, -5);
