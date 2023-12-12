@@ -64,6 +64,11 @@ function preload() {
     // day13
     assets.day13GrammarSource = loadJSON("./assets/day13/sentence.json");
 
+    // day16
+    assets.day16Shader = loadShader("./assets/day16/shader.vert", "./assets/day16/shader.frag");
+    assets.day16World = loadShader("./assets/day16/shader.vert", "./assets/day16/world.frag");
+    assets.day16Background = loadImage("./assets/day16/bg.jpg");
+
     // examples
 
     // day24
