@@ -10,8 +10,6 @@ class Day18 extends Day {
         this.controls = ""; // Write any controls for interactivity if needed or leave blank
         this.credits = "Made by Phoenix Perry"; // Replace with your name
 
-        // Define variables here. Runs once during the sketch holder setup
-
         this.treeLevels = 5; // Number of levels in the tree
         this.treeWidth = 200; // Width of the base of the tree
         this.treeHeight = 300; // Total height of the tree
@@ -27,13 +25,10 @@ class Day18 extends Day {
 
     prerun() {
 
-        // Initialise/reset variables here. Runs once, every time your day is viewed
-
         this.treeWidth = 100*.5 // Width of the base of the tree
         this.treeHeight = 100*.3; // Total height of the tree
         this.treeColor = color(25, 200, 25); // Green color for the tree
         this.levelHeight = this.treeHeight / this.treeLevels; // Height of each level of the tree
-        // frameRate(30); // BIG EEEP
     }
 
     update() {
