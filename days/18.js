@@ -126,32 +126,4 @@ class Day18 extends Day {
           this.lastChangeTime = millis();
         }
     }
-
-
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
-
-    mousePressed() {
-
-    }
-
-    mouseReleased() {
-
-    }
-
-    keyPressed() {
-
-    }
-
-    keyReleased() {
-
-    }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    HelperClass = class {
-
-        constructor() {
-
-        }
-    }
 }

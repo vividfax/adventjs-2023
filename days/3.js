@@ -269,16 +269,6 @@ class Day3 extends Day {
       image(this.layerUI,0,0)
     }
 
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
-
-    mousePressed() {
-
-    }
-
-    mouseReleased() {
-
-    }
-
     keyPressed() {
       if(keyCode==32){
         this.initialise()
@@ -327,16 +317,6 @@ class Day3 extends Day {
         this.blowingLeft = false
       }
     }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    HelperClass = class {
-
-        constructor() {
-
-        }
-    }
-
 
   //Dedicated layer for a highlight to (hopefully) give the snow globe a 3D effect
    initialiseGlobeHighlightImg(){

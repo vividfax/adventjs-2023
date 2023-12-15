@@ -125,24 +125,6 @@ class Day1 extends Day {
 
     }
 
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
-
-    mousePressed() {
-        //make the whole chain bounce
-    }
-
-    mouseReleased() {
-
-    }
-
-    keyPressed() {
-
-    }
-
-    keyReleased() {
-
-    }
-
     // Below is the basic setup for a nested class. This can be deleted or renamed
 
     Star = class {

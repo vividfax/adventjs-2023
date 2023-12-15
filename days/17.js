@@ -112,12 +112,6 @@ class Day17 extends Day {
         }
     }
 
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
-
-    mousePressed() {
-        //make the whole chain bounce
-    }
-
     mouseReleased() {
         if (mouseButton === LEFT) {
             //topleft
@@ -179,20 +173,10 @@ class Day17 extends Day {
 
     }
 
-    keyPressed() {
-
-    }
-
     keyReleased() {
         if (keyCode === 32) {
             this.prerun();
         }
-    }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    Star = class {
-
     }
 
     GenerateBlankSnowflakeDNA(DNAinput){

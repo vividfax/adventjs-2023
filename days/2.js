@@ -124,25 +124,4 @@ class Day2 extends Day {
         this.update();
         noLoopCanvas.image(canvas, 0, 0, width, height);
     }
-
-    mouseReleased() {
-
-    }
-
-    keyPressed() {
-
-    }
-
-    keyReleased() {
-
-    }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    HelperClass = class {
-
-        constructor() {
-
-        }
-    }
 }

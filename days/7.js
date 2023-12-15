@@ -106,31 +106,4 @@ class Day7 extends Day {
             candle(50 + 150*i, 3+i*7)
         }
     }
-
-    // Below are optional functions for interactivity. They can be deleted from this file if you want
-
-    mousePressed() {
-
-    }
-
-    mouseReleased() {
-
-    }
-
-    keyPressed() {
-
-    }
-
-    keyReleased() {
-
-    }
-
-    // Below is the basic setup for a nested class. This can be deleted or renamed
-
-    HelperClass = class {
-
-        constructor() {
-
-        }
-    }
 }
