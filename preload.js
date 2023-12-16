@@ -73,15 +73,6 @@ function preload() {
     assets.day18GrammarSource = loadJSON("./assets/day18/grammar-source.json");
     assets.day18Font = loadFont("./assets/day18/comicsans.ttf");
     assets.day18Letter = loadImage("./assets/day18/letter-wide.png");
-
-    // examples
-
-    // day24
-    assets.day0GrammarSource = loadJSON("./assets/day0/grammar-source.json");
-    assets.day0Font = loadFont("./assets/day0/Pangolin-Regular.ttf");
-
-    // day25
-    assets.day0SnowmanFace = loadImage("./assets/day0/snowman-face.png");
 }
 
 class Day12Assets {
