@@ -69,6 +69,11 @@ function preload() {
     assets.day16World = loadShader("./assets/day16/shader.vert", "./assets/day16/world.frag");
     assets.day16Background = loadImage("./assets/day16/bg.jpg");
 
+    // day18
+    assets.day18GrammarSource = loadJSON("./assets/day18/grammar-source.json");
+    assets.day18Font = loadFont("./assets/day18/comicsans.ttf");
+    assets.day18Letter = loadImage("./assets/day18/letter-wide.png");
+
     // examples
 
     // day24

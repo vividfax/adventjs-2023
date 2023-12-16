@@ -1,4 +1,4 @@
-// Made by Phoenix Perry
+// Made by Holly Nielsen
 
 class Day18 extends Day {
 
@@ -7,118 +7,121 @@ class Day18 extends Day {
         super();
         this.loop = true; // Set to true or false
 
-        this.controls = ""; // Write any controls for interactivity if needed or leave blank
-        this.credits = "Made by Phoenix Perry"; // Replace with your name
+        this.controls = "TYPE your name and press ENTER for a personalised letter! CLICK for a new one."; // Write any controls for interactivity if needed or leave blank
+        this.credits = "Made by Holly Nielsen"; // Replace with your name
 
-        this.treeLevels = 5; // Number of levels in the tree
-        this.treeWidth = 200; // Width of the base of the tree
-        this.treeHeight = 300; // Total height of the tree
-        this.treeColor;
-        this.levelHeight;
-        // Add more animation functions as needed
-        this.snowflakes = []; // array to hold snowflakes
-        this.colorIndex = 0; // Index to keep track of the current color
-        this.lastChangeTime = 0; // Time since the last color change
-        this.colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']; // Rainbow colors array
-
+        this.textInput = "";
+        this.storedName = "";
+        this.defaultName = "Holly";
+        this.stockNames = ["Colin","Kevin","Albert","Wilfred","Arthur","Cecil","Edgar","Edwin","Clarence","Bernard","Archibald","Cornelius","Dennis","Frank","Nigel","Herbert","Hector","Norman","Milton","Roy","Marilyn","Mary","Jane","Edwina","Gertrude","Opal","Agnes","Betty","Bertha","Vivian","Doreen","Maude","Myrtle","Winifred","Sylvia"]
     }
 
     prerun() {
-
-        this.treeWidth = 100*.5 // Width of the base of the tree
-        this.treeHeight = 100*.3; // Total height of the tree
-        this.treeColor = color(25, 200, 25); // Green color for the tree
-        this.levelHeight = this.treeHeight / this.treeLevels; // Height of each level of the tree
+        this.grammar = setupGrammar(assets.day18GrammarSource);
+        this.randomText;
     }
 
     update() {
 
-        fill(255);
-        noStroke();
-        background(25); // Set a dark background for contrast with the snowflakes
+        background(200); // You can delete this line if you want
+        angleMode(DEGREES)
 
-        if (frameCount % 30 === 0 && this.snowflakes.length < 50) { // Every 15 frames, add a new snowflake
-            this.snowflakes.push(new this.Snowflake(random(width), -10));
-        }
+        noStroke()
 
-        for (let i = this.snowflakes.length - 1; i >= 0; i--) {
-            this.snowflakes[i].update(); // update snowflake position
-            this.snowflakes[i].display(); // draw snowflake
-
-            // remove the snowflake if it's out of the canvas boundaries
-            if (this.snowflakes[i].posY > height || this.snowflakes[i].posX < 0 || this.snowflakes[i].posX > width) {
-              this.snowflakes.splice(i, 1);
+        if(false){
+            push()
+            rotate(45)
+            for(var i=-200; i<width+200; i+=20){
+                fill(0,0,255)
+                rect(i, -height, i+40, height*2)
+                i += 20;
+                fill(255)
+                rect(i, -height, i+40, height*2)
+                i += 20;
+                fill(255,0,0)
+                rect(i, -height, i+40, height*2)
+                i += 20;
+                fill(255)
+                rect(i, -height, i+40, height*2)
+                // i += 20;
             }
+            pop();
+
+
+            fill("#FAD6A5")
+            rect(0, 0, 40, height);
+            rect(width-40, 0, 40, height);
+            rect(0, 0, width, 40);
+            rect(0, height-60, width, 60);
+            fill(255)
+            rect(60, 60, width-120, height-140);
+        }
+        else{
+            background(255)
+            image(assets.day18Letter, 0, 0, width, height-40)
         }
 
-        this.drawNetworkTree(width / 2, height / 2, 200, 300, 5);
+        strokeWeight(1)
+
+        fill(0)
+
+        text("Type your name here and hit enter: "+this.textInput, 20, height-25);
+        if(this.storedName.length > 0){
+            text("Thanks, "+this.storedName+"! You can click to generate new examples, or type a new name.", 20, height-10);
+        }
+
+        textSize(20);
+        textFont(assets.day18Font);
+        textAlign(LEFT, CENTER);
+        rectMode(CENTER);
+
+
+
+        // fill(180);
+        // text(this.randomText, width/2-2, height/2-2, width*0.8);
+        fill("#36454F");
+        if(false){
+            text(this.randomText, width/2, height/2-20, width-160, );
+        }
+        else{
+            textSize(16)
+            text(this.randomText, width/4+120, height/2-55, width-250, height);
+        }
     }
 
-    Snowflake = class {
+    mousePressed() {
+        this.newText();
+    }
 
-        constructor() {
-
-            // initialize coordinates
-            this.posX = random(0, width);
-            this.posY = random(-50, 0);
-            this.size = random(2, 8);
+    keyPressed() {
+        if(keyCode > 64 && keyCode < 91){
+            this.textInput += key;
         }
-
-        update() {
-          // snowflakes fall at different y speeds
-          this.posY += pow(this.size, 0.5)/2;
-
-          // x position drifts slightly
-          //this.posX += random(.7, -1)  ;
+        if(keyCode == 13){
+            //submit
+            this.storedName = this.textInput;
+            this.textInput = "";
+            //potentially regenerate input here
+            this.newText();
         }
-
-        display() {
-          noStroke();
-          fill(255); // White color for the snowflake
-          ellipse(this.posX, this.posY, this.size);
+        if(keyCode == 8){
+            this.textInput = this.textInput.slice(0, -1);
         }
     }
 
-    drawNetworkTree(x, y, baseWidth, height, levels) {
+    newText() {
 
-        let points = [];
-        stroke(255); // Set line color to white for contrast
-        fill(this.colors[this.colorIndex]); // Set fill color to the current color in the array
+        // get new text
 
-        // Calculate the horizontal and vertical spacing between points
-        let hSpacing = baseWidth / levels;
-        let vSpacing = height / levels;
+        this.randomText = getText(this.grammar);
 
-        // Generate the points for the tree
-        for (let i = 0; i <= levels; i++) {
-          for (let j = 0; j <= i; j++) {
-            let curX = x - (i * hSpacing) / 2 + j * hSpacing;
-            let curY = y - height / 2 + i * vSpacing;
-            points.push({pos: createVector(curX, curY), color: this.colors[(this.colorIndex + i + j) % this.colors.length]});
-            noStroke();
-            fill(points[points.length - 1].color);
-            ellipse(curX, curY, 8, 8); // Draw the point
-
-          }
+        if(this.storedName.length > 0){
+            this.randomText = this.randomText.replace("((name))", this.storedName);
+        }
+        else{
+            this.randomText = this.randomText.replace("((name))", this.stockNames[Math.floor(Math.random()*this.stockNames.length)]);
         }
 
-        // Connect the points with lines
-        for (let i = 0; i < points.length; i++) {
-          for (let j = i + 1; j < points.length; j++) {
-            let distance = dist(points[i].pos.x, points[i].pos.y, points[j].pos.x, points[j].pos.y);
-            // Connect points that are close enough to each other
-            if (distance < hSpacing * 1.5) {
-              // stroke(150);
-              // //line(points[i].pos.x, points[i].pos.y, points[j].pos.x, points[j].pos.y);
-
-            }
-          }
-        }
-
-        // Update the color index based on the time interval
-        if (millis() - this.lastChangeTime > 500) { // 0.25 seconds has passed
-            this.colorIndex = (this.colorIndex + 1) % this.colors.length;
-          this.lastChangeTime = millis();
-        }
+        this.randomText = this.randomText.replaceAll("<p>", "\n\n");
     }
 }
