@@ -7,7 +7,7 @@ class Day18 extends Day {
         super();
         this.loop = true; // Set to true or false
 
-        this.controls = "TYPE your name and press ENTER for a personalised letter! CLICK for a new one."; // Write any controls for interactivity if needed or leave blank
+        this.controls = "TYPE your name and press ENTER for a personalised holiday letter! CLICK for a new one."; // Write any controls for interactivity if needed or leave blank
         this.credits = "Made by Holly Nielsen"; // Replace with your name
 
         this.textInput = "";
