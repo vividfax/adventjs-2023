@@ -156,7 +156,7 @@ class Day20 extends Day {
             from: 'Big Cola',
             origin:
               'Look Santa, for some reason we love lorries and we need you to be on the lorries or otherwise it makes everyone sad. What are your rates for #alt# lorry faces? Is this something you can quote us for?',
-            a: "It's big Cola, build a new Christmas empire on the rights to your face on lorries",
+            a: 'Build a new Christmas empire on the rights to your face on lorries',
             b: 'Start again, this is ludicrous',
             aResponseTitle: "Santa's rich!!!",
             aResponseBody:
@@ -175,6 +175,43 @@ class Day20 extends Day {
               'terrifying',
               'one of those drunk',
             ],
+          },
+          {
+            from: 'Head Groom',
+            origin:
+              "The Reindeer need new shoes but they're asking if they can get a brand deal with Nike. I've tried to explain that's a PR disaster but they have #alt# legal team that will not back down. What should we do Santa?",
+            a: 'Use your social capital amongst the demi-gods to birth some newly born flying pine martens ready to replace them',
+            b: "Give them what they want, we can talk to Nike and see if we can't help them hide the worst of it",
+            aResponseTitle: 'The pine marten takes flights',
+            aResponseBody:
+              "The flying pine martens are a hit! Everyone really misses the reindeer but the pine martens have shown that there's always an alternative.",
+            bResponseTitle: 'Why must we always negotiate with Nike?',
+            bResponseBody:
+              'Every Christmas we have to deal with this. We have to figure something out next year that puts an end to this.',
+            emoji: '🏇',
+            alt: [
+              'an extra letigious',
+              'a voracious',
+              'a scheming',
+              'a slimy',
+              'a powerful',
+              'an unrelenting',
+            ],
+          },
+          {
+            from: 'Arboretum Manager',
+            origin:
+              'Uhhhhh, the Christmas trees seem to be developing a taste for #alt# blood. Could you send us some assistance Santa? They seem angry.',
+            a: "Grab the loppers, it's time for a little topiary",
+            b: "Present a gift to the trees, try to understand what's happening",
+            aResponseTitle: 'A sapbath',
+            aResponseBody:
+              "The trees leaves have been clipped and they've been put in their place by Santa's wrath. There's peace for now but it will not last",
+            bResponseTitle: 'A little goes a long way',
+            bResponseBody:
+              "The trees gratefully receive fresh soil and land for miles. They're at peace for now but we'll need a more permanent solution if we're to live in harmony with the rest of the planet.",
+            emoji: '🌲🌳',
+            alt: ['human', 'panda', 'chicken', 'sheep', 'cow', 'pig', 'doggf'],
           },
         ],
       };

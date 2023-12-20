@@ -1,0 +1,102 @@
+{
+    "origin": [
+        "#line#, On<p> The River of Thames #date#"
+    ],
+    "line": [
+        "#name.capitalize#, #title#.<p>#activity#.!BREAK!#printed.capitalize# #printername.capitalize# #on the ice#"
+    ],
+    "name": [
+        "Charles"
+    ],
+    "title": [
+        "King",
+        "Queen",
+        "Princess",
+        "Lady",
+        "1st Earl Godolphin",
+        " 1st Earl FitzWalter",
+        "MP for Lostwithiel",
+        "Bishop",
+        "Prentice",
+        "Costermonger",
+        "Maid",
+        "Coachman",
+        "Fellmonger",
+        "Actress",
+        "Lawyer",
+        "Drayman",
+        "Doctor",
+        "Calker",
+        "Beadle",
+        "Abbess",
+        "Merchant",
+        "Merchant",
+        "Merchant",
+        "Prentice",
+        "Prentice",
+        "Prentice",
+        "Prentice",
+        "Prentice"
+    ],
+    "activity": [
+        "Is Warned #warnNouns#",
+        "Did Buy #buyNouns#",
+        "Did Enjoy #enjoyNouns#"
+    ],
+    "buyNouns": [
+        "A Silver Spoon",
+        "A Piece of Gingerbread",
+        "A Shoulder of Mutton",
+        "A Pewter Sauceboat",
+        "Gin",
+        "Carrow-Wimbles"
+    ],
+    "warnNouns": [
+        "J Frost Hath By Force and Violence Taken Possession of the River Thames",
+        "Be Not There In The Moonshine",
+        "Of Future Thaws",
+        "Of Full Pockets Gone Empty",
+        "Of Nymphs",
+        "Of Broken Shoestrings",
+        "Slippery Things Have Been Done On The Ice",
+        "Of Knaves",
+        "Cold Doings in London"
+    ],
+    "enjoyNouns": [
+        "The Art of Skating",
+        "The Nine-pin Playing",
+        "Atkins Roasting an Ox",
+        "Sliding",
+        "The Printing Booth",
+        "The Musick Booth",
+        "The Tavern",
+        "The Geneva Booth",
+        "The Goldsmiths",
+        "Will. Ellis The Poet",
+        "Bess Rhyming On The Frost",
+        "Fuddling Tents",
+        "Tottering Fops",
+        "The Wheel Of Fortune"
+    ],
+    "printed": [
+        "printed by"
+    ],
+    "printername": [
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "G. Croom",
+        "F. Smith Nicholls"
+    ],
+    "on the ice": [
+        "On The Ice"
+    ],
+    "date": [
+        "December 25. 1683."
+    ]
+}
