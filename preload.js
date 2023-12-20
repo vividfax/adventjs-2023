@@ -75,15 +75,15 @@ function preload() {
     assets.day18Letter = loadImage("./assets/day18/letter-wide.png");
 
     // day22
-    assets.day22titleFont = loadFont("../assets/day22/font.ttf")
-    assets.day22testImage = loadImage("../assets/day22/sprite_aliased.png")
-    assets.day22bg = loadImage("../assets/day22/bg.jpg")
-    assets.day22sixpence_head = loadImage("../assets/day22/sixpencehead-trans.png")
-    assets.day22sixpence_tail = loadImage("../assets/day22/sixpencetail-trans.png")
-    assets.day22GrammarSource = loadJSON("../assets/day22/grammar-source.json");
+    assets.day22titleFont = loadFont("./assets/day22/font.ttf")
+    assets.day22testImage = loadImage("./assets/day22/sprite_aliased.png")
+    assets.day22bg = loadImage("./assets/day22/bg.jpg")
+    assets.day22sixpence_head = loadImage("./assets/day22/sixpencehead-trans.png")
+    assets.day22sixpence_tail = loadImage("./assets/day22/sixpencetail-trans.png")
+    assets.day22GrammarSource = loadJSON("./assets/day22/grammar-source.json");
 
     // day23
-    assets.day23Song = new Audio("assets/day23/dark_snowy_night.mp3");
+    assets.day23Song = new Audio("./assets/day23/dark_snowy_night.mp3");
 }
 
 class Day12Assets {
