@@ -31,7 +31,7 @@ class Homepage {
             20, 7, 2, 13, 22,
             24, 6, 17, 11, 14,
             10, 19, 25, 1, 5,
-            29, 28, 30, 26, 27,
+            26, 27, 28, 29, 30,
         ];
         this.doorNumberAlign = [
             1, 3, 1, 3, 1,
@@ -131,11 +131,11 @@ class Homepage {
 
         let palette;
 
-        if (i == 3) palette = [this.palette.dark, this.palette.light];
-        else if (i == 2) palette = [this.palette.gold, this.palette.black];
-        else if (i == 4) palette = [this.palette.mid, this.palette.black];
-        else if (i == 0) palette = [this.palette.dark, this.palette.gold];
-        else if (i == 1) palette = [this.palette.gold, this.palette.light];
+        if (i == 0) palette = [this.palette.dark, this.palette.light];
+        else if (i == 1) palette = [this.palette.gold, this.palette.black];
+        else if (i == 2) palette = [this.palette.mid, this.palette.black];
+        else if (i == 3) palette = [this.palette.dark, this.palette.gold];
+        else if (i == 4) palette = [this.palette.gold, this.palette.light];
 
         let h = height*2;
         let twoD = createGraphics(width, h);

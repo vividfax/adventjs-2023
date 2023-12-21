@@ -84,6 +84,23 @@ function preload() {
 
     // day23
     assets.day23Song = new Audio("./assets/day23/dark_snowy_night.mp3");
+
+    // day26
+    assets.day26SnowmanFace = loadImage("./assets/day26/face.png");
+    assets.day26SnowmanArms = [];
+    for (let i = 0; i < 5; i++) assets.day26SnowmanArms.push(loadImage("./assets/day26/arm"+i+".png"));
+
+    // day27
+    assets.day27carol1 = loadSound("./assets/day27/deck-the-halls.mp3");
+    assets.day27carol2 = loadSound("./assets/day27/ding-dong-merrily-on-high.mp3");
+    assets.day27carol3 = loadSound("./assets/day27/god-rest-you-merry-gentlemen.mp3");
+    assets.day27knock = loadSound("./assets/day27/knock.mp3");
+    assets.day27slam = loadSound("./assets/day27/slam.mp3");
+
+    // day29
+    assets.day29bowImage = loadImage('./assets/day29/bow.png');
+    assets.day29elfImage = loadImage('./assets/day29/elf.png');
+    assets.day29bgImage = loadImage('./assets/day29/background.png');
 }
 
 class Day12Assets {

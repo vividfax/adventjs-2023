@@ -49,7 +49,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    if (debugOn) daysToReveal = 23;
+    if (debugOn) daysToReveal = 25;
 
     homepage = new Homepage();
 }
