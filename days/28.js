@@ -240,10 +240,6 @@ class Day28 extends Day {
             this.pullCracker(this.rightHand, this.leftHand);
             this.rightHand.retract();
         }
-
-        // if (keyCode == DOWN_ARROW) {
-        //     noLoop();
-        // }
     }
 
     pullCracker(first, second) {
@@ -615,7 +611,7 @@ class Day28 extends Day {
 
         display() {
 
-            // if (!this.visible) return;
+            if (!this.visible) return;
 
             let gap = 0;
 

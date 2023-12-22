@@ -12,7 +12,6 @@ class Day26 extends Day {
         this.mapSize = width*3;
 
         this.trailCanvas = createGraphics(this.mapSize, this.mapSize);
-        // this.grainCanvas = createGraphics(this.mapSize/5, this.mapSize/5);
 
         this.colours = {
             snow: "#fff",
@@ -38,7 +37,6 @@ class Day26 extends Day {
         this.player = new this.Player(this.mapSize);
 
         this.trailCanvas.clear();
-        // this.createGrain();
     }
 
     setupSnowColliders() {
@@ -61,22 +59,6 @@ class Day26 extends Day {
         }
     }
 
-    createGrain() {
-
-        for (let i = 0; i < this.grainCanvas.width; i++) {
-            for (let j = 0; j < this.grainCanvas.height; j++) {
-                // if (random() < 0.5) {
-                    let colour = color(this.colours.snow);
-                    let s = 0.04;
-                    let a = noise(i*s, j*s)*105;
-                    colour.setAlpha(a);
-                    this.grainCanvas.set(i, j, colour);
-                // }
-            }
-        }
-        this.grainCanvas.updatePixels();
-    }
-
     update() {
 
         angleMode(DEGREES);
@@ -97,11 +79,6 @@ class Day26 extends Day {
         this.displayTrail();
         this.displayPavement();
 
-        // push();
-        // translate(width/2-this.player.x+this.cameraX, height/2-this.player.y+this.cameraY);
-        // for (let i = 0; i < this.snowColliders.length; i++) this.snowColliders[i].display();
-        // pop();
-
         let playerDisplayed = false;
 
         for (let i = 0; i < this.snowballs.length; i++) {
@@ -117,8 +94,6 @@ class Day26 extends Day {
         }
 
         if (!playerDisplayed) this.displayPlayer();
-
-        // image(this.grainCanvas, width/2-this.player.x+this.cameraX, height/2-this.player.y+this.cameraY, this.mapSize, this.mapSize);
     }
 
     displayTrail() {
@@ -296,14 +271,6 @@ class Day26 extends Day {
                 this.collided = true;
                 player.radius += 0.2;
             }
-        }
-
-        display() {
-
-            if (this.collided) return;
-
-            fill(0);
-            ellipse(this.x, this.y, this.radius*2);
         }
     }
 
