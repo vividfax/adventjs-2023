@@ -262,12 +262,13 @@ class Homepage {
     enterDoor() {
 
         let door = this.currentDoor;
+        let d = deltaTime/17;
 
         if (this.doorDateAlpha > 0) {
 
-            this.cameraX = lerp(this.cameraX, door.xPos, 0.1);
-            this.cameraY = lerp(this.cameraY, door.yPos, 0.1);
-            this.doorDateAlpha = lerp(this.doorDateAlpha, 0, 0.1);
+            this.cameraX = lerp(this.cameraX, door.xPos, 0.1*d);
+            this.cameraY = lerp(this.cameraY, door.yPos, 0.1*d);
+            this.doorDateAlpha = lerp(this.doorDateAlpha, 0, 0.1*d);
 
             if (this.doorDateAlpha < 0.01) {
                 this.cameraX = door.xPos;
@@ -277,7 +278,7 @@ class Homepage {
 
         } else if (this.doorDateAlpha == 0 && this.maxZoom - this.zoom > 0) {
 
-            this.zoom = lerp(this.zoom, this.maxZoom, 0.1);
+            this.zoom = lerp(this.zoom, this.maxZoom, 0.1*d);
             if (this.maxZoom - this.zoom < 0.01) {
 
                 this.zoom = this.maxZoom;
@@ -289,7 +290,7 @@ class Homepage {
 
         } else if (this.maxZoom == this.zoom) {
 
-            this.openAmount = lerp(this.openAmount, 1, 0.1);
+            this.openAmount = lerp(this.openAmount, 1, 0.1*d);
             if (this.openAmount > 0.99) {
                 this.openAmount = 1;
                 this.enteringDoor = false;
@@ -302,10 +303,11 @@ class Homepage {
     exitDoor() {
 
         let door = this.currentDoor;
+        let d = deltaTime/17;
 
         if (this.openAmount != 0) {
 
-            this.openAmount = lerp(this.openAmount, 0, 0.15);
+            this.openAmount = lerp(this.openAmount, 0, 0.1*d);
             if (this.openAmount < 0.001) {
                 this.openAmount = 0;
                 this.doorOpen = false;
@@ -314,14 +316,14 @@ class Homepage {
 
         } else if (this.openAmount == 0 && this.zoom-this.minZoom > 0) {
 
-            this.zoom = lerp(this.zoom, this.minZoom, 0.1);
+            this.zoom = lerp(this.zoom, this.minZoom, 0.1*d);
             if (this.zoom - this.minZoom < 0.01) this.zoom = this.minZoom;
 
         } else if (this.zoom == this.minZoom) {
 
-            this.cameraX = lerp(this.cameraX, this.originX, 0.1);
-            this.cameraY = lerp(this.cameraY, this.originY, 0.1);
-            this.doorDateAlpha = lerp(this.doorDateAlpha, 1, 0.1);
+            this.cameraX = lerp(this.cameraX, this.originX, 0.1*d);
+            this.cameraY = lerp(this.cameraY, this.originY, 0.1*d);
+            this.doorDateAlpha = lerp(this.doorDateAlpha, 1, 0.1*d);
 
             if (this.doorDateAlpha > 0.999) {
 
