@@ -1,4 +1,4 @@
-let debugOn = true; // make sure this is set to false before uploading
+let debugOn = false; // make sure this is set to false before uploading
 
 let profilerOn = false; // make sure this is set to false before uploading
 let _perfTimer = 0;
@@ -49,7 +49,7 @@ function setup() {
 
     createDays();
     daysToReveal = getDaysToReveal();
-    if (debugOn) daysToReveal = 25;
+    // if (debugOn) daysToReveal = 25;
 
     homepage = new Homepage();
 }
