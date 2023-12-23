@@ -126,6 +126,8 @@ function changeDay(date) {
         pop();
         noLoopCanvas.image(canvas, 0, 0, width, height);
     }
+
+    homepage.skippedFrame = false;
 }
 
 function resetModes() {

@@ -264,7 +264,7 @@ class Homepage {
         let door = this.currentDoor;
         let d = deltaTime/17;
 
-        if (d > 10) return;
+        // if (d > 10) return;
 
         if (this.doorDateAlpha > 0) {
 
@@ -291,6 +291,11 @@ class Homepage {
             }
 
         } else if (this.maxZoom == this.zoom) {
+
+            if (!this.skippedFrame) {
+                this.skippedFrame = true;
+                return;
+            }
 
             this.openAmount = lerp(this.openAmount, 1, 0.1*d);
             if (this.openAmount > 0.99) {
