@@ -101,6 +101,9 @@ function preload() {
     assets.day29bowImage = loadImage('./assets/day29/bow.png');
     assets.day29elfImage = loadImage('./assets/day29/elf.png');
     assets.day29bgImage = loadImage('./assets/day29/background.png');
+
+    // day30
+    assets.day30Font = loadFont("./assets/day30/norwester.otf");
 }
 
 class Day12Assets {
